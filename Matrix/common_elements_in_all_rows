@@ -22,7 +22,7 @@ void printCommonElements(int mat[M][N])
   
                 // If this is last row
                 if (i==M-1 && mp[(mat[i][j])]==M)
-                  cout << mat[i][j] << " ";
+                  cout << mat[i][j] <<" ";
             }
         }
     }
