@@ -1,0 +1,55 @@
+//reachinng last element always possible
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+
+        int pos  = 0;
+        int des = 0;
+        int jumps = 0;  
+
+        for(int i =0; i<n-1; i++){
+            des = max(des, i+nums[i]);
+
+            if(pos == i){
+                pos = des;
+                jumps++;
+            }
+        }
+        return jumps;  
+    }
+};
+
+
+// cases where sometimes you cant reach last element
+class Solution{
+  public:
+    int minJumps(int arr[], int n){
+        // Your code here
+        int maxR = arr[0];
+        int step = arr[0];
+        int jumps =1;
+        
+        if(arr[0]==0)   return -1;
+        if(n==1)    return 0;
+        
+        for(int i =1; i<n; i++){
+            if(i==n-1){
+                return jumps;
+            }
+            
+            maxR = max(maxR, i+arr[i]);
+            
+            step--;
+            
+            if(step ==0){
+                jumps++;
+                
+                if(i>=maxR)  return -1;
+                
+                step = maxR -i;
+            }
+        }
+        
+    }
+};

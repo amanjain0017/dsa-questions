@@ -1,0 +1,22 @@
+//brute force
+
+//using 2 pointers
+int smallestsubarraysum(int arr[], int n, int x){
+    
+    int mini = n+1, sum = 0;
+
+    int start = 0, end = 0;
+
+    while(end<n){
+        while(sum<x && end<n)
+            sum+=arr[end++];
+
+        while(sum>x && start<n){
+            mini = min(mini, end-start);
+            sum-=arr[start++];
+        }
+    }
+    return mini;
+
+
+}

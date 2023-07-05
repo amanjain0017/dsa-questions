@@ -1,0 +1,78 @@
+// pointer approach
+class Solution
+{
+    public:    
+       vector <int> commonElements (int A[], int B[], int C[], int n1, int n2, int n3)
+        {
+            //code here.
+           int i = 0, j =0, k =0;
+           vector<int> result;
+           
+           
+           while(i<n1 && j<n2 && k<n3){
+               
+                while(i <= (n1 - 2) && A[i] == A[i+1])
+                    i++;
+                while(j <= (n2 - 2) && B[j] == B[j+1])
+                    j++;
+                while(k <= (n3 - 2) && C[k] == C[k+1])
+                    k++;
+               
+               
+                if(A[i]==B[j] && B[j]==C[k]){
+                   result.push_back(A[i]);
+                   i++; j++; k++;
+                }
+                else if(A[i]<C[k]){
+                    i++;
+                }
+                else if(B[j]<C[k]){
+                    j++;
+                }
+                else{
+                    k++;
+                }
+               
+            }
+        
+            return result;
+        }
+
+};
+
+
+//using hashset or hashmap
+class Solution
+{
+    public:    
+       vector <int> commonElements (int A[], int B[], int C[], int n1, int n2, int n3)
+        {
+            unordered_set<int> a;
+            for(int i=0; i<n1; i++){
+                a.insert(A[i]);
+            }
+            
+            unordered_set<int> b;
+            for(int i=0; i<n2; i++){
+                if(a.find(B[i]) != a.end()){
+                    b.insert(B[i]);
+                }
+            }
+            
+            unordered_set<int> c;
+            for(int i=0; i<n3; i++){
+                if(b.find(C[i]) != b.end()){
+                    c.insert(C[i]);
+                }
+            }
+            
+            vector<int> res;
+            for(auto x  : c){
+                res.push_back(x);
+            }
+            sort(res.begin(), res.end());
+            return res;
+            //code here.
+        }
+
+};

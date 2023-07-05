@@ -1,0 +1,89 @@
+//brute force
+int rowWithMax1s(bool mat[R][C]) {
+    // code here
+    int rowIndex = -1 ;
+    int maxCount = 0 ;
+    
+    for(int i = 0 ; i < R ; i++){
+        int count = 0 ;
+        for(int j = 0 ; j < C ; j++ ){
+            if(mat[i][j] == 1){
+                count++ ;
+            }
+        }
+        if(count > maxCount){
+            maxCount = count ;
+            rowIndex = i ;
+        }
+    }
+    
+    return rowIndex ;
+}
+
+//binary search
+class Solution{
+    
+    int firstOcc(vector<int>& row, int low, int high){
+        while(low<=high){
+            
+            int mid = low+(high-low)/2;
+            
+            if(row[mid]==1 && ( row[mid-1]==0 || mid==0  ) )
+                return mid;
+                
+            else if(row[mid]==0)
+                return firstOcc(row,mid+1, high);
+                
+            else
+                return firstOcc(row,low, mid-1);
+        } 
+        return -1;
+    }
+    
+    
+public:
+	int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
+	    // code here
+	    int max_row = -1, max = -1;
+	    
+	    for(int i =0; i<n; i++){
+	        
+	        int index = firstOcc(arr[i], 0, m-1);
+	        
+	        if(index!=-1 && m-index>max){
+	            
+	            max = m-index;
+	            max_row = i;
+	            
+	        }
+	    }
+	    
+	    return max_row;
+	}
+
+};
+
+//further optimization
+class Solution{
+public:
+	int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
+	    // code here
+	    int i = 0;
+	    int j = m-1;
+	    int ind = -1;
+	    while(i<n && j>=0)
+	    {
+	        if(arr[i][j] == 1)
+	        {
+	            ind  = i;
+	            j--;
+	        }
+	        else
+	        {
+	            i++;
+	        }
+	    }
+	    return ind;
+	}
+
+};

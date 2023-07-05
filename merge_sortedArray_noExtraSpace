@@ -1,0 +1,45 @@
+//2pointer approach
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int i = m-1;
+        int j = n-1;
+        int k = m+n-1;
+
+        while( j>=0 ){
+            if(i>=0 && nums1[i]>nums2[j]){
+                nums1[k--] = nums1[i--];
+            }
+            else{
+                nums1[k--] = nums2[j--];
+            }
+        }
+    }
+};
+
+
+//using sorting stl function
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        for (int j = 0, i = m; j<n; j++){
+            nums1[i] = nums2[j];
+            i++;
+        }
+        sort(nums1.begin(),nums1.end());
+    }
+};
+
+
+//when extra space is not provided for merging arrays already
+int merge(int ar1[], int ar2[], int n)
+{
+    int j = 0;
+    int i = n - 1;
+    while (ar1[i] > ar2[j] && j < n && i > -1)
+        swap(ar1[i--], ar2[j++]);
+    sort(ar1, ar1 + n);
+    sort(ar2, ar2 + n);
+    
+}
+ 
