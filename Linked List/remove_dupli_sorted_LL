@@ -1,0 +1,39 @@
+//traversinng and deleteing if next element is dupli
+Node *removeDuplicates(Node *head)
+{
+ // your code goes here
+    Node* curr = head;
+    
+    
+    while(curr->next !=NULL){
+        if(curr->data == curr->next->data)
+            curr->next = curr->next->next;
+        
+        else
+            curr = curr->next;
+    }
+    
+    return head;
+}
+
+//iterate over duplicates at a time
+Node *removeDuplicates(Node *head)
+{
+ // your code goes here
+    Node* curr = head, *temp = head;
+    
+    while(temp){
+        
+        if(temp->data != curr->data){
+            curr->next = temp;
+            curr = temp;
+        }
+        
+        temp = temp->next;
+        
+    }
+    
+    curr->next = NULL;
+    
+    return head;
+}
