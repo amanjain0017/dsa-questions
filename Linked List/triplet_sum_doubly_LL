@@ -20,21 +20,6 @@ int countTriplets(struct Node* head, int x)
 }
 
 //using hashing
-
-// C++ implementation to count triplets in a sorted doubly linked list
-// whose sum is equal to a given value 'x'
-#include <bits/stdc++.h>
- 
-using namespace std;
- 
-// structure of node of doubly linked list
-struct Node {
-    int data;
-    struct Node* next, *prev;
-};
- 
-// function to count triplets in a sorted doubly linked list
-// whose sum is equal to a given value 'x'
 int countTriplets(struct Node* head, int x)
 {
     struct Node* ptr, *ptr1, *ptr2;

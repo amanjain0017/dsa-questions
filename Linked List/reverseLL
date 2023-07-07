@@ -17,7 +17,7 @@ node *reverseLL(node* head){
 
 
 //recursive 1
-Node* reverse(Node* &head, Node* curr, Node* prvs){
+void reverse(Node* &head, Node* curr, Node* prvs){
     if(curr==NULL){
         head = prvs;
         return;
