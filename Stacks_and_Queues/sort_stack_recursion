@@ -1,0 +1,30 @@
+void sortedInsert(stack<int>& st, int num) {
+    if (st.empty() || st.top() < num){
+        st.push(num);
+        return;   
+    }
+    
+    
+    int x = st.top();
+    st.pop();
+    sortedInsert(st, num);
+    st.push(x);
+    
+}
+
+void sortStack(stack<int>& st) {
+    if (st.size()==0)
+        return;
+    
+    int num = st.top();
+    st.pop();
+    
+    sortStack(st);
+    
+    sortedInsert(st, num);
+}
+
+void SortedStack::sort() {
+    sortStack(s);
+}
+
