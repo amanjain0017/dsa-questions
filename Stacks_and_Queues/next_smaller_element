@@ -1,0 +1,45 @@
+//brute force
+void printNSE(int arr[], int n)
+{
+    int next, i, j;
+    for (i = 0; i < n; i++)
+    {
+        next = -1;
+        for (j = i + 1; j < n; j++)
+        {
+            if (arr[i] > arr[j])
+            {
+                next = arr[j];
+                break;
+            }
+        }
+        cout << arr[i] << " -- "
+             << next << endl;
+    }
+}
+
+//using stack
+class Solution
+{
+    public:
+    //Function to find the next smaller element for each element of the array.
+    vector<long long> nextSmallerElement(vector<long long> arr, int n){
+        // Your code here
+        stack<long long> s;
+        vector<long long> v(n);
+        
+        s.push(-1);
+        
+        for(int i = n-1; i>=0; i--){
+            
+            while(s.top()!= -1 && s.top()>=arr[i])
+                s.pop();
+                
+            v[i] = s.top();
+            s.push(arr[i]);
+        }
+        
+        return v;
+        
+    }
+};
