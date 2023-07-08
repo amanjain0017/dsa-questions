@@ -1,0 +1,47 @@
+//using stack
+class Solution
+{
+    public:
+    queue<int> rev(queue<int> q)
+    {
+        // add code here.
+        stack<int> s;
+        while(!q.empty()){
+            int num = q.front();
+            q.pop();
+            
+            s.push(num);
+        }
+        
+        while(!s.empty()){
+            int num = s.top();
+            s.pop();
+            
+            q.push(num);
+        }
+        
+        return q;
+    }
+};
+
+//using recursion
+class Solution
+{
+    void reverse(queue<int> &q){
+        if(q.empty())   return;
+        
+        int num = q.front();
+        q.pop();
+        
+        reverse(q);
+        
+        q.push(num);
+        
+    }
+    public:
+    queue<int> rev(queue<int> q)
+    {
+        // add code here.
+        return reverse(q);
+    }
+};
