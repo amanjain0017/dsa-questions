@@ -1,0 +1,93 @@
+//push operation costly
+void QueueStack :: push(int x)
+{
+        // Your Code
+        q2.push(x);
+        
+        while(!q1.empty()){
+            int num = q1.front();
+            q1.pop();
+            
+            q2.push(num);
+        }
+        
+        queue<int> q = q1;
+        q1 = q2;
+        q2 = q;
+}
+
+//Function to pop an element from stack using two queues. 
+int QueueStack :: pop()
+{
+        // Your Code
+        if(q1.empty())  return -1;
+        
+        
+        int num = q1.front();
+        q1.pop();
+        
+        return num;
+}
+
+
+//pop operation costly
+void QueueStack :: push(int x)
+{
+        // Your Code
+        q1.push(x);
+        
+
+}
+
+//Function to pop an element from stack using two queues. 
+int QueueStack :: pop()
+{
+        // Your Code
+        if(q1.empty())  return -1;
+        
+        while(q1.size()!= 1){
+            q2.push(q1.front()) ;
+            q1.pop();
+        }
+            
+        int toDelete = q1.front();
+        q1.pop();
+        
+        queue<int> q = q1;
+        q1 = q2;
+        q2 = q;
+        
+        return toDelete;
+}
+
+
+//using single queue
+void Stack::push(int data)
+{
+    //  Get previous size of queue
+    int s = q.size();
+
+    // Push the current element
+    q.push(data);
+
+    // Pop all the previous elements and put them after
+    // current element
+
+    for (int i = 0; i < s; i++) {
+        // Add the front element again
+        q.push(q.front());
+
+        // Delete front element
+        q.pop();
+    }
+}
+
+// Removes the top element
+void Stack::pop()
+{
+    if (q.empty())
+        cout << "No elements\n";
+    else
+        q.pop();
+}
+

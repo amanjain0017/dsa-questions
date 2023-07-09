@@ -1,0 +1,34 @@
+void push(int element) {
+        dq.push_back(element);
+    }
+
+    // Remove the most recently added element from the stack and return it
+    int pop() {
+        if (dq.empty()) {
+            cout << "Stack is empty." << endl;
+            return -1; // or throw an exception
+        }
+        int element = dq.back();
+        dq.pop_back();
+        return element;
+    }
+
+    // Return the most recently added element in the stack without removing it
+    int top() {
+        if (dq.empty()) {
+            cout << "Stack is empty." << endl;
+            return -1; // or throw an exception
+        }
+        return dq.back();
+    }
+
+    // Check if the stack is empty
+    bool empty() {
+        return dq.empty();
+    }
+
+    // Return the number of elements in the stack
+    int size() {
+        return dq.size();
+    }
+};
