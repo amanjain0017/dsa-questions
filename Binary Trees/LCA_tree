@@ -1,0 +1,75 @@
+//using path finding method
+bool findPath(TreeNode* root, int target, std::vector<int>& path) {
+    if (root == nullptr)
+        return false;
+
+    // Add the current node to the path
+    path.push_back(root->val);
+
+    // If the target node is found, return true
+    if (root->val == target)
+        return true;
+
+    // Check if the target node exists in the left or right subtree
+    if (findPath(root->left, target, path) || findPath(root->right, target, path))
+        return true;
+
+    // If the target node is not found, remove the current node from the path
+    path.pop_back();
+
+    return false;
+}
+
+// Function to find the Lowest Common Ancestor (LCA) of two nodes in a binary tree
+int findLCA(TreeNode* root, int node1, int node2) {
+    std::vector<int> path1, path2;
+
+    // Find the paths from root to the two nodes
+    if (!findPath(root, node1, path1) || !findPath(root, node2, path2))
+        return -1; // One or both nodes are not present in the tree
+
+    // Find the first common element from the back of the paths
+    std::unordered_set<int> set;
+
+    for (int i = path1.size() - 1; i >= 0; i--)
+        set.insert(path1[i]);
+
+    for (int i = path2.size() - 1; i >= 0; i--) {
+        if (set.find(path2[i]) != set.end())
+            return path2[i]; // LCA found
+    }
+
+    return -1; // LCA not found
+}
+
+
+//using recursion
+class Solution
+{
+    public:
+    //Function to return the lowest common ancestor in a Binary Tree.
+    Node* lca(Node* root ,int n1 ,int n2 )
+    {
+       //Your code here 
+        if(root==NULL)
+            return NULL;
+            
+        if(root->data==n1 || root->data==n2)
+            return root;
+            
+        Node* left = lca(root->left, n1, n2);
+        Node* right = lca(root->right, n1, n2);
+        
+        if(left && right)
+            return root;
+            
+        else if(left && !right)
+            return left;
+            
+        else if(!left && right)
+            return right;
+            
+        else if(!left && !right)
+            return NULL;
+    }
+};
