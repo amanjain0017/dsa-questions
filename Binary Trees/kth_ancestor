@@ -1,0 +1,42 @@
+Node * kthParent(Node* root, int &k, int target){
+    if(root==NULL)
+        return NULL;
+        
+    if(root->data==target)
+        return root;
+        
+    Node* leftAns = kthParent(root->left, k,target);
+    Node* rightAns = kthParent(root->right, k,target);
+    
+    if(leftAns && !rightAns){
+        k--;
+        
+        if(k==0){
+            k=INT_MAX;
+            return root;
+        }
+        else    return leftAns;
+    }
+    if(!leftAns && rightAns){
+        k--;
+        
+        if(k==0){
+            k=INT_MAX;
+            return root;
+        }
+        else    return rightAns;
+    }
+    
+    return NULL;
+}
+
+int kthAncestor(Node *root, int k, int node)
+{
+    // Code here
+    Node* ans = kthParent(root, k, node);
+    
+    if(ans==NULL || ans->data==node)
+        return -1;
+    
+    return ans->data;
+}
