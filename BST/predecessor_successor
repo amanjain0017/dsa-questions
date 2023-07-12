@@ -1,0 +1,66 @@
+pair<int,int> predecessorSuccessor(BinaryTreeNode<int>* root, int key)
+{
+    int pred = -1, succ = -1;
+
+    BinaryTreeNode<int> * temp = root;
+
+    while(temp->data!=key){
+        if(temp->data < key){
+            pred = temp->data;
+            temp = temp->right;
+        }
+        else{
+            succ = temp->data;
+            temp = temp->left;
+        }
+    }
+
+    BinaryTreeNode<int>* leftTree = temp->left;
+    while(leftTree){
+        pred = leftTree->data;
+        leftTree = leftTree->right;
+    }
+
+    BinaryTreeNode<int>* rightTree = temp->right;
+    while(rightTree){
+        succ = rightTree->data;
+        rightTree = rightTree->left;
+    }
+
+    pair<int, int> ans = make_pair(pred, succ);
+    return ans;
+}
+
+
+
+//when the node need not be in the tree
+class Solution
+{
+    public:
+    void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+    {
+        Node*curr = root;
+        
+        while(curr)
+        {
+            if(curr -> key > key)
+            {
+                suc = curr;
+                curr = curr -> left;
+            }
+            else curr = curr -> right;
+        }
+       curr = root;
+       
+       while(curr)
+       {
+           if(curr -> key < key)
+           {
+               pre = curr;
+               curr = curr -> right;
+           }
+           else curr = curr -> left;
+       }
+        // Your code goes here
+    }
+};
