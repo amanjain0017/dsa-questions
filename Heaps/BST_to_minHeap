@@ -1,0 +1,32 @@
+void inorder(BinaryTreeNode* root, vector<int> &in){
+	if(!root)	return;
+
+	inorder(root->left, in);
+	in.push_back(root->data);
+	inorder(root->right, in);
+}
+
+
+BinaryTreeNode* preorderFill(BinaryTreeNode* root, vector<int> &in, int &index){
+	if(!root)	return NULL;
+
+	root->data = in[index++];
+	preorderFill(root->left, in, index);
+	preorderFill(root->right, in, index);
+
+	return root;
+}
+
+
+
+BinaryTreeNode* convertBST(BinaryTreeNode* root)
+{
+	// Write your code here.
+	vector<int> in;
+	inorder(root, in);
+
+	int index = 0;
+	BinaryTreeNode* newRoot = preorderFill(root, in, index);
+
+	return newRoot;
+}

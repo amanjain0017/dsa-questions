@@ -1,0 +1,49 @@
+class Solution {
+    
+    int countNodes(Node* root){
+        if(!root)   return 0;
+        
+        int ans = 1 + countNodes(root->left) + countNodes(root->right);
+        return ans;
+    }
+    
+    bool isCBT(Node* root, const int nodeCount, int index){
+        if(!root)           return true;
+        if(index>=nodeCount)    return false;
+        
+        else{
+            bool left = isCBT(root->left, nodeCount, 2 * index + 1);
+            bool right = isCBT(root->right, nodeCount, 2 * index + 2);
+            
+            return left && right;
+        }
+    }
+    
+    bool isMaxOrder(Node* root){
+        if(!root->left && !root->right)
+            return true;
+            
+        if(!root->right)
+            return root->data > root->left->data;
+            
+        else{
+            bool left = isMaxOrder(root->left);
+            bool right = isMaxOrder( root->right);
+            
+            return (left && right && root->data > root->left->data && root->data > root->right->data);
+        }
+    }
+    
+  public:
+    bool isHeap(struct Node* tree) {
+        // code here
+        int nodeCount = countNodes(tree);
+        int index = 0;
+        
+        if(isCBT(tree, nodeCount, index) && isMaxOrder(tree))
+            return true;
+            
+        return false;
+        
+    }
+};
