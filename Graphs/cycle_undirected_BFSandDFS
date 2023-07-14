@@ -1,0 +1,74 @@
+
+#include<bits/stdc++.h>
+bool isCyclicBFS(unordered_map<int, list<int>>& adj, 
+unordered_map<int, bool>& visited, int node){
+    
+    unordered_map<int, int> parent;
+    queue<int> q;
+    q.push(node);
+    
+    parent[node] = -1;
+    visited[node] = true;
+
+    while(!q.empty()){
+        int front = q.front();
+        q.pop();
+
+        for(auto neighbour: adj[front]){
+            if(!visited[neighbour]){
+                q.push(neighbour);
+                visited[neighbour] = true;
+                parent[neighbour] = front;
+            }
+            else if(visited[neighbour] && neighbour!=parent[front]){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool isCyclicDFS(unordered_map<int, list<int>>& adj, 
+unordered_map<int, bool>& visited, int node, int parent){
+
+    visited[node] = true;
+
+    for(auto neighbour: adj[node]){
+        if(!visited[neighbour]){
+            bool ans = isCyclicDFS(adj, visited, neighbour, node);
+
+            if(ans)
+                return true;
+        }
+        else if(neighbour!=parent){
+            return true;
+        }
+    }
+    return false;
+}
+
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+    //adjacencey list
+    unordered_map<int, list<int>> adj;
+    for(int i = 0; i< m; i++){
+        int u = edges[i][0];
+        int v = edges[i][1];
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    } 
+
+    unordered_map<int, bool> visited;
+
+    for(int i = 0; i<n; i++){
+        if(!visited[i]){
+            bool ans = isCyclicDFS(adj, visited, i, -1);
+
+            if(ans) 
+                return "Yes";
+        }
+    }
+    return "No";
+}
