@@ -1,0 +1,46 @@
+//top up
+class Solution
+{
+    
+    public:
+    
+    int dp[1001][1001];
+    
+    int solveMem(int W, int wt[], int val[], int n){
+        // base condition
+       if(n==0 || W==0)     
+            return 0;
+       
+       if(dp[n][W]!=-1)     
+            return dp[n][W];
+       
+        if( wt[n-1] <= W)
+            return dp[n][W] = max(val[n-1] + solveMem(W-wt[n-1], wt, val, n-1), 0 + solveMem(W, wt, val, n-1));
+            
+        else
+            return dp[n][W] = solveMem(W, wt, val, n-1);
+    }
+    
+    //Function to return max value that can be put in knapsack of capacity W.
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+        memset(dp, -1, sizeof(dp));
+        solveMem(W, wt, val, n);
+    }
+};
+
+//bottom up
+ int knapSack(int W, int wt[], int val[], int n) 
+    {
+       vector<vector<int>> dp(n+1,vector<int>(W+1,0));
+       for(int i=1;i<=n;i++){
+           for(int j=1;j<=W;j++){
+               int t=0,nt=0;
+               if(wt[i-1]<=j)
+                    t=val[i-1]+dp[i-1][j-wt[i-1]];
+               nt=dp[i-1][j];
+               dp[i][j]=max(t,nt);
+           }
+       }
+       return dp[n][W];
+    }
