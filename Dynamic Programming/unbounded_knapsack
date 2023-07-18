@@ -1,0 +1,42 @@
+class Solution{
+    
+    int unboundKnapSack(int n, int W, int val[], int wt[], vector<vector<int>>&dp){
+        if(n==0)
+            return 0;
+        if(W==0)
+            return 0;
+            
+        if(dp[n-1][W]!=-1)
+            return dp[n-1][W];
+            
+        if(wt[n-1]<=W)
+            return dp[n-1][W] = max(val[n-1] + unboundKnapSack(n, W-wt[n-1], val, wt, dp),
+            unboundKnapSack(n-1, W, val , wt, dp));
+            
+        else return dp[n-1][W] = unboundKnapSack(n-1, W, val , wt, dp);
+    }
+    
+public:
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+        vector<vector<int>>dp(N, vector<int>(W+1, -1));
+        return unboundKnapSack(N , W, val , wt, dp);
+    }
+};
+
+
+
+ int knapSack(int W, int wt[], int val[], int n) 
+    {
+       vector<vector<int>> dp(n+1,vector<int>(W+1,0));
+       for(int i=1;i<=n;i++){
+           for(int j=1;j<=W;j++){
+               int t=0,nt=0;
+               if(wt[i-1]<=j)
+                    t=val[i-1]+dp[i][j-wt[i-1]];
+               nt=dp[i-1][j];
+               dp[i][j]=max(t,nt);
+           }
+       }
+       return dp[n][W];
+    }
