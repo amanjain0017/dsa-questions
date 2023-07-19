@@ -1,0 +1,48 @@
+//top up
+class Solution {
+  public:
+    long long int solve(int coins[], int N, int sum,  vector<vector<long long int>> &dp) {
+        
+        if(N==0 || sum<0)    return 0;
+        if(sum==0)  return 1;
+        
+        if(dp[N-1][sum]!=-1)    return dp[N-1][sum];
+        
+        if(coins[N-1]<=sum){
+            return dp[N-1][sum] = solve(coins, N-1, sum, dp) + solve(coins, N, sum-coins[N-1], dp);
+        }
+        else return dp[N-1][sum] = solve(coins, N-1, sum, dp);
+}
+
+
+    long long int count(int coins[], int N, int sum) {
+        vector<vector<long long int>> dp(N, vector<long long int> (sum+1, -1));
+        return solve(coins, N, sum, dp);
+    }
+};
+
+//bottom up
+    long long int solveMem(int coins[], int N, int sum) {
+         vector<vector<long long >> dp(N+1, vector<long long > (sum+1, 0));
+         
+        for(int i = 0; i<=N; i++){
+            dp[i][0] = 1;
+        }
+        
+        for(int i =1; i<=N; i++){
+            for(int j = 1; j<=sum; j++){
+                if(coins[i-1]<=j){
+                    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]];
+                }
+                else dp[i][j] = dp[i-1][j];
+            }
+        }
+        
+        return dp[N][sum];
+}
+
+
+    long long int count(int coins[], int N, int sum) {
+        // vector<vector<long long int>> dp(N, vector<long long int> (sum+1, -1));
+        return solveMem(coins, N, sum);
+    }
