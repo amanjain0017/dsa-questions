@@ -1,0 +1,46 @@
+int dp[201][201][2];
+int mod = 1003;
+
+class Solution{
+public:
+    int solve(string s, int i , int j , bool isTrue){
+        if(i>j)     return false;
+        
+        if(i==j){
+            if(isTrue)  return s[i]=='T';
+            else  return s[i]=='F';
+        }
+        
+        if(dp[i][j][isTrue]!=-1)    return dp[i][j][isTrue];
+        
+        int ans = 0;
+        for(int k = i+1; k<=j-1; k+=2){
+            int lt = solve(s,i ,k-1 ,true );
+            int lf = solve(s,i,k-1,false );
+            int rt = solve(s,k+1,j, true);
+            int rf = solve(s, k+1, j,false );
+            
+            if(s[k]=='&'){
+                if(isTrue)  ans += lt*rt; 
+                else  ans += lf*rt + lt*rf + lf*rf; 
+            }
+            else if(s[k]=='|'){
+                if(isTrue)  ans += lt*rt + lt*rf + lf*rt; 
+                else  ans += lf*rf; 
+            }
+            else{
+                if(isTrue)  ans += lt*rf + lf*rt;
+                else  ans += lt*rt + lf*rf;
+            }
+        }
+        
+        return dp[i][j][isTrue] = ans%mod;
+    }
+
+    int countWays(int N, string S){
+        int n = S.length();
+        
+        memset(dp, -1, sizeof(dp));
+        return solve( S, 0, n-1, true);
+    }
+};
