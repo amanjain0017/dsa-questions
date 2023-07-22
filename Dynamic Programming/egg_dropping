@@ -25,3 +25,42 @@ class Solution
         return solve(n, k, dp);
     }
 };
+
+
+
+//optimized
+class Solution
+{
+    public:
+    
+    int solve(int n , int k, vector<vector<int>>&dp){
+        if(k==1 || k==0)    return k;
+        if(n==1)    return k;
+        
+        if(dp[n][k]!=-1)    return dp[n][k];
+        
+        int mini = INT_MAX;
+        for(int i = 1; i<=k; i++){
+            
+            if(dp[n-1][i-1]==-1)
+                dp[n-1][i-1] = solve(n-1, i-1, dp);
+                
+            if(dp[n][k-i]==-1)
+                dp[n][k-i] = solve(n, k-i, dp);
+                
+                
+            int temp = 1 + max(dp[n-1][i-1], dp[n][k-i]);
+            mini = min( mini, temp);
+        }
+        
+        return dp[n][k] = mini;
+        
+    }
+    //Function to find minimum number oi attempts needed in 
+    //order to find the critical floor.
+    int eggDrop(int n, int k) 
+    {
+        vector<vector<int>>dp(n+1, vector<int> (k+1, -1));
+        return solve(n, k, dp);
+    }
+};
