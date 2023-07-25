@@ -1,0 +1,48 @@
+//brute force
+void findPair(int arr[], int n, int diff) {
+    // Nested loop to compare all possible
+      // pairs of elements
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+              if(i == j)
+                  continue;
+           
+            // If the difference between the
+              // two elements is n, print them
+            if((arr[j] - arr[i]) == diff) {
+                cout << "Pair Found: (" << arr[i] << ", " << arr[j] << ")";
+                  return;
+            }
+        }
+    }
+   
+      cout << "No such pair";
+}
+
+
+//2 pointer approach
+bool findPair(int arr[], int size, int n){
+    //code
+    if(size==1)     return false;
+    
+    sort(arr, arr+size);
+    int i = 0, j = 1;
+    
+    while( j < size){
+        
+        int diff = arr[j]-arr[i];
+        
+        if(i!=j && diff == n){
+            return true;
+        }
+        else if(diff > n){
+            i++;
+        }
+        else{
+            j++;
+        }
+    }
+    
+    return false;
+   
+}
