@@ -1,0 +1,53 @@
+class Solution{
+public:
+
+	// Function to find maximum product subarray
+	long long maxProduct(vector<int> arr, int n) {
+	    // code here
+	    long long maxi = arr[0], mini = arr[0];
+	    long long ans = arr[0];
+	    
+	    for(int i =1; i<n; i++){
+	       
+	       if(arr[i]<0)     swap(maxi, mini);
+	       
+	       maxi = max((long long)arr[i], arr[i] * maxi);
+	       mini = min((long long)arr[i], arr[i] * mini);
+	       
+	       ans = max(ans, maxi);
+	    }
+	    
+	    return ans;
+	}
+};
+
+
+//kadane modification
+class Solution{
+public:
+
+	// Function to find maximum product subarray
+	long long maxProduct(vector<int> arr, int n) {
+	    // code here
+	    long long ans = INT_MIN;
+	    long long prod =1;
+	    
+	    for(int i = 0; i<n; i++){
+	        prod = prod*arr[i];
+	        ans = max(ans, prod);
+	        
+	        if(prod==0)     prod  = 1;
+	    }
+	    
+	    prod = 1;
+	    
+	    for(int i = n-1; i>=0; i--){
+	        prod = prod*arr[i];
+	        ans = max(ans, prod);
+	        
+	        if(prod==0)     prod  = 1;
+	    }
+	    
+	    return ans;
+	}
+};

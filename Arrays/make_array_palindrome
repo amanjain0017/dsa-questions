@@ -1,0 +1,25 @@
+
+    bool isPalindrome(int x){
+        int rev = 0, org = x;
+        
+        while(org>0){
+            int digit = org%10;
+            rev  = (rev*10) + digit;
+            org = org/10;
+        }
+        
+        return rev==x;
+    }
+    
+    
+    int PalinArray(int a[], int n)
+    {
+    	// code here
+    	for(int i =0; i<n; i++){
+    	    if(!isPalindrome(a[i]))
+    	        return 0;
+    	}
+    	
+    	return 1;
+    }
+};

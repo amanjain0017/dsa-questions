@@ -1,0 +1,77 @@
+class Solution
+{
+public:
+    int minSwap(int arr[], int n, int k) {
+        // Complet the function
+        int good = 0, bad = 0;
+        
+        for(int i =0; i<n; i++){
+            if(arr[i]<=k)
+                good++;
+        }
+        
+        for(int i = 0; i<good; i++){
+            if(arr[i]>k)
+                bad++;
+        }
+        
+        int ans = bad;
+        
+        for(int i = 0, j = good; j<n ; i++, j++){
+            
+            if(arr[i]>k)    bad--;
+            if(arr[j]>k)    bad++;
+            ans = min(ans, bad);
+        }
+        
+        return ans;
+    }
+};
+
+
+//without pointers
+int minSwap(int arr[], int n, int k)
+{
+ 
+    // Initially snowBallsize is 0
+    int snowBallSize = 0;
+ 
+    for (int i = 0; i < n; i++) {
+ 
+        // Calculating the size of window required
+        if (arr[i] <= k) {
+            snowBallSize++;
+        }
+    }
+ 
+    int swap = 0, ans_swaps = INT_MAX;
+ 
+    for (int i = 0; i < snowBallSize; i++) {
+        if (arr[i] > k)
+            swap++;
+    }
+ 
+    ans_swaps = min(ans_swaps, swap);
+ 
+    for (int i = snowBallSize; i < n; i++) {
+ 
+        // Checking in every window no. of swaps required
+        // and storing its minimum
+        if (arr[i - snowBallSize] <= k && arr[i] > k)
+            swap++;
+        else if (arr[i - snowBallSize] > k && arr[i] <= k)
+            swap--;
+        ans_swaps = min(ans_swaps, swap);
+    }
+    return ans_swaps;
+}
+ 
+// Driver's code
+int main()
+{
+    int arr1[] = { 2, 7, 9, 5, 8, 7, 4 };
+    int n = sizeof(arr1) / sizeof(arr1[0]);
+    int k = 5;
+    cout << minSwap(arr1, n, k) << "\n";
+    return 0;
+}
