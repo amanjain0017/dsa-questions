@@ -1,0 +1,37 @@
+bool isPossible(vector<int>&arr, int P, int C, int mid){
+    int paratha = 0;
+    int time = 0;
+
+    for(int i =0; i<arr.size(); i++){
+        time = arr[i];
+        int j = 2;
+
+        while(time <= mid){
+            paratha++;
+            time = time + arr[i]*j;
+        }
+
+        if(paratha >= P)    return true;
+    }
+
+    return false;
+}
+
+int findMintime(vector<int>&rank, int P, int C){
+    
+    int s = 0, e = 1e9;
+    int ans = 0;
+
+    while(s<=e){
+        int mid = s + (e-s)/2;
+
+        if(isPossible(rank, P, C, mid)){
+            ans = mid;
+            e = mid-1;
+        }
+        else {
+            s = mid+1;
+        }
+    }
+    return ans;
+}

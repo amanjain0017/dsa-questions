@@ -1,0 +1,72 @@
+//brute force
+void mergeArrays(int arr1[], int arr2[], int n1,
+                            int n2, int arr3[])
+{
+    int i = 0, j = 0, k = 0;
+      // traverse the arr1 and insert its element in arr3
+      while(i < n1){
+      arr3[k++] = arr1[i++];
+    }
+       
+      // now traverse arr2 and insert in arr3
+      while(j < n2){
+      arr3[k++] = arr2[j++];
+    }
+       
+      // sort the whole array arr3
+      sort(arr3, arr3+n1+n2);
+}
+
+
+//using 2 pointers and comapring min
+void mergeArrays(int arr1[], int arr2[], int n1,
+                             int n2, int arr3[])
+{
+    int i = 0, j = 0, k = 0;
+ 
+    // Traverse both array
+    while (i<n1 && j <n2)
+    {
+        // Check if current element of first
+        // array is smaller than current element
+        // of second array. If yes, store first
+        // array element and increment first array
+        // index. Otherwise do same with second array
+        if (arr1[i] < arr2[j])
+            arr3[k++] = arr1[i++];
+        else
+            arr3[k++] = arr2[j++];
+    }
+ 
+    // Store remaining elements of first array
+    while (i < n1)
+        arr3[k++] = arr1[i++];
+ 
+    // Store remaining elements of second array
+    while (j < n2)
+        arr3[k++] = arr2[j++];
+}
+
+
+//uisng ordered map
+void mergeArrays(int a[], int b[], int n, int m)
+{
+    // Declaring a map.
+    // using map as a inbuilt tool
+    // to store elements in sorted order.
+    map<int, int> mp;
+     
+    // Inserting values to a map.
+    for(int i = 0; i < n; i++)mp[a[i]]++;
+     
+     
+    for(int i = 0;i < m;i++)mp[b[i]]++;
+ 
+     
+    // Printing keys of the map.
+    for(auto j: mp)
+    {
+         for(int i=0; i<j.second;i++)
+            cout<<j.first<<" ";
+    }
+}
