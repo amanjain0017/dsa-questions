@@ -1,0 +1,39 @@
+bool isPossible(vector<int>&arr, int n, int m, int mid){
+    int sum = 0;
+
+    for(int i = 0; i<n; i++){
+        if(arr[i]>mid)
+            sum+=arr[i]-mid;
+    }
+
+    if(sum>=m)
+        return true;
+
+    return false;
+}
+
+int maxHeightSaw(vector<int> &trees, int n, int m){
+    
+    int maxi = INT_MIN;
+    for(int i =0; i<n; i++){
+        maxi = max(maxi, trees[i]);
+    }
+
+    int s = 0, e = maxi;
+    int ans = -1;
+
+    while (s<=e)
+    {
+        /* code */
+        int mid = s + (e-s)/2;
+
+        if(isPossible(trees, n, m, mid)){
+            ans = mid;
+            s = mid+1;
+        }else{
+            e = mid-1;
+        }
+    }
+
+    return ans;
+}
