@@ -1,0 +1,53 @@
+//brute force
+
+//sorting
+
+//hasharray
+class Solution{
+public:
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        // code here
+        vector<int> hash(n+1);
+        
+        for(int i = 0; i<n; i++){
+            hash[arr[i]]++;
+        }
+        
+        int missing = -1, repeating = -1;
+        
+        for(int i = 1; i<=n; i++){
+            if(hash[i] == 2)    repeating = i;
+            if(hash[i] == 0)    missing = i;
+        }
+        
+        return {repeating, missing};
+    }
+};
+
+//using maths
+class Solution{
+public:
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        // code here
+        long long int sn = n*(n+1)/2; 
+        long long int s2n = n*(n+1)*(2*n+1)/6; 
+        long long int s = 0, s2 =0;
+        
+        
+        for(int i = 0; i<n; i++){
+            s += arr[i];
+            s2 += (long long)arr[i] * (long long)arr[i];
+        }
+        
+        long long int val1 = s-sn; //x-y
+        long long int val2 = s2-s2n;
+        
+        val2 = val2 /val1;//x+y
+        
+        long long int x = (val1 + val2)/2;
+        
+        long long int y = x-val1;
+        
+        return {(int)x, (int)y};
+    }
+};
