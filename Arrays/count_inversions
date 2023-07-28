@@ -1,0 +1,78 @@
+class Solution{
+  public:
+    // arr[]: Input Array
+    // N : Size of the Array arr[]
+    // Function to count inversions in the array.
+    long long int merge(long long arr[], int l, int m, int r) {
+        
+        long long int inv = 0;
+        int len1 = m - l + 1;
+        int len2 = r - m;
+    
+        long long int first[len1];
+        long long int second[len2];
+         
+         
+         int mainIndex = l;
+         for(int i = 0; i<len1; i++){
+             first[i] = arr[mainIndex++];
+         }
+         
+         mainIndex = m+1;
+         for(int i = 0; i<len2; i++){
+             second[i] = arr[mainIndex++];
+         }
+         
+         //merge 2 sorted arrays
+         int index1 = 0, index2 = 0;
+         mainIndex = l;
+         
+         while(index1 < len1 && index2 < len2){
+            if(first[index1] <= second[index2])
+                arr[mainIndex++] = first[index1++];
+                
+            else {
+                arr[mainIndex++] = second[index2++];
+                inv += (len1 - index1);
+            }
+        }
+         
+         while(index1 < len1){
+             arr[mainIndex++] = first[index1++];
+         }
+         
+         while(index2 < len2){
+             arr[mainIndex++] = second[index2++];
+         }
+         
+         return inv;
+    }
+    
+    
+    long long int mergeSort(long long arr[], int l, int r)
+    {
+        
+        long long int inv = 0;
+        //base case
+        if(l>=r)
+            return 0;
+            
+        int mid = l + (r-l)/2;
+        
+        inv += mergeSort(arr, l, mid);
+        inv += mergeSort(arr, mid+1, r);
+        
+        inv += merge(arr, l, mid, r);
+        
+        return inv;
+    }
+    
+    long long int inversionCount(long long arr[], long long N)
+    {
+        return mergeSort(arr, 0, N-1);
+    }
+
+};
+
+
+//brute force

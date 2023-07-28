@@ -1,0 +1,43 @@
+void mergeSort(int arr[], int l, int r)
+{
+    if (l < r) {
+ 
+        // Same as (l + r) / 2, but avoids overflow
+        // for large l and r
+        int m = l + (r - l) / 2;
+ 
+        // Sort first and second halves
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+ 
+        merge(arr, l, m, r);
+    }
+}
+
+void merge(int arr[], int start, int mid, int end){
+    int start2 = mid+1;
+
+    if(arr[start2] >= arr[mid])
+        return ;
+
+    while (start <= mid && start2 <= end) {
+        if(arr[start]<=arr[start2])
+            start++;
+
+        else{
+            int index = start2;
+            int value = arr[start2];
+
+            while(index!=start){
+                arr[index] = arr[index-1];
+                index--;
+            }
+
+            arr[start] = value;
+
+            start++;
+            start2++;
+            mid++;
+        }
+    }
+}

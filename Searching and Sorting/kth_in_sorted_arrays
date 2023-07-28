@@ -1,0 +1,88 @@
+//using merging two sorted arrays
+int kth(int arr1[], int arr2[], int m, int n, int k)
+{
+    int sorted1[m + n];
+    int i = 0, j = 0, d = 0;
+    while (i < m && j < n)
+    {
+        if (arr1[i] < arr2[j])
+            sorted1[d++] = arr1[i++];
+        else
+            sorted1[d++] = arr2[j++];
+    }
+    while (i < m)
+        sorted1[d++] = arr1[i++];
+    while (j < n)
+        sorted1[d++] = arr2[j++];
+    return sorted1[k - 1];
+}
+
+//optimizing nerge of two array approach
+int find(int A[], int B[], int m, int n, int k_req) 
+{
+    int k = 0, i = 0, j = 0;
+
+    // Keep taking smaller of the current
+    // elements of two sorted arrays and
+    // keep incrementing k
+    while(i < m && j < n)
+    {
+        if(A[i] < B[j]) 
+        {
+            k++;
+            if(k == k_req)
+                return A[i];
+            i++;
+        } 
+        else
+        {
+            k++;
+            if(k == k_req)
+                return B[j];
+            j++;
+        }
+    }
+
+    // If array B[] is completely traversed
+    while(i < m) 
+    {
+        k++;
+        if(k == k_req)
+            return A[i];
+        i++;
+    }
+
+    // If array A[] is completely traversed
+    while(j < n) 
+    {
+        k++;
+        if(k == k_req)
+            return B[j];
+        j++;
+    }
+} 
+
+
+//using a minHeap
+class Solution{
+    public:
+    int kthElement(int arr1[], int arr2[], int n, int m, int k)
+    {
+        priority_queue<int, vector<int> , greater<int>> pq;
+        
+        for(int i = 0; i<n; i++){
+            pq.push(arr1[i]);
+        }
+        
+        for(int i = 0; i<m; i++){
+            pq.push(arr2[i]);
+        }
+        
+        while(k-1){
+            pq.pop();
+            k--;
+        }
+        
+        return pq.top();
+    }
+};
