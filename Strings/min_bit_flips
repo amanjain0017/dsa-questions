@@ -1,0 +1,23 @@
+char flip(char ch){
+    return (ch == '0')? '1': '0' ;
+}
+
+int minFlipCount(string S, char expected){
+    int flips = 0;
+    for(int i = 0; i<S.size(); i++){
+        if(S[i] != expected)
+            flips++;
+            
+        expected = flip(expected);
+    }
+    
+    return flips;
+}
+
+int minFlips (string S)
+{
+    // your code here
+    int with0 = minFlipCount(S, '0');
+    int with1 = minFlipCount(S, '1');
+    return min( with0, with1);
+}
