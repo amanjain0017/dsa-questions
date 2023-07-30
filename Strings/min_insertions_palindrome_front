@@ -1,0 +1,62 @@
+bool ispalindrome(string s)
+{
+    int l = s.length();
+    int j;
+     
+    for(int i = 0, j = l - 1; i <= j; i++, j--)
+    {
+        if(s[i] != s[j])
+            return false;
+    }
+    return true;
+}
+ 
+// Driver code
+int main()
+{
+    string s = "BABABAA";
+    int cnt = 0;
+    int flag = 0;
+     
+    while(s.length()>0)
+    {
+        // if string becomes palindrome then break
+        if(ispalindrome(s))
+        {
+            flag = 1;
+             break;
+        }
+        else
+        {
+        cnt++;
+         
+        // erase the last element of the string
+        s.erase(s.begin() + s.length() - 1);
+        }
+    }
+     
+    // print the number of insertion at front
+    if(flag)
+        cout << cnt;
+}
+
+
+//using 2 pointer approach
+  int addMinChar(string str1) {
+        int n = str1.length();
+        int start = 0;
+        int end = n - 1;
+        int res = 0;
+        while (start < end) {  // While the pointers have not met in the middle of the string
+            if (str1[start] == str1[end]) {  // If the characters at the start and end pointers are equal
+                start++;  // Move the start pointer to the right
+                end--;  // Move the end pointer to the left
+            }
+            else {
+                res++;  // Increment the count of characters to be added
+                start = 0;  // Reset the start pointer to the beginning of the string
+                end = n - res - 1;  // Reset the end pointer to the end of the string with a reduced number of characters
+            }
+        }
+        return res;  // Return the count of characters to be added
+    }
