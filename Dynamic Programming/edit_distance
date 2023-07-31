@@ -1,0 +1,99 @@
+//recursive
+class Solution {
+  public:
+    int solve(string s, string t, int i, int j){
+        if(i == s.length())     return t.length()-j;
+        if(j == t.length())     return s.length()-i;
+        
+        int ans = 0;
+        
+        if(s[i]==t[j]){
+            solve(s, t, i+1, j+1);
+        } else{
+            int insertAns = 1 + solve(s, t, i, j+1); 
+            int deleteAns = 1 + solve(s, t, i+1, j);
+            int replaceAns = 1  + solve(s, t, i+1, j+1);
+            
+            ans = min(insertAns, deleteAns, replaceAns);
+        }   
+        
+        return ans;
+    }
+  
+    int editDistance(string s, string t) {
+        // Code here
+        return solve(s, t, 0, 0);
+    }
+};
+
+
+//top down
+class Solution {
+  public:
+    int solve(string s, string t, int i, int j,  vector<vector<int>> &dp){
+        if(i == s.length())     return t.length()-j;
+        if(j == t.length())     return s.length()-i;
+        
+        if(dp[i][j]!=-1)    return dp[i][j];
+        
+        int ans = 0;
+        
+        if(s[i]==t[j]){
+            ans = solve(s, t, i+1, j+1, dp);
+        } else{
+            int insertAns = 1 + solve(s, t, i, j+1, dp); 
+            int deleteAns = 1 + solve(s, t, i+1, j, dp);
+            int replaceAns = 1  + solve(s, t, i+1, j+1, dp);
+            
+            ans = min(insertAns, min(deleteAns, replaceAns));
+        }   
+        
+        return dp[i][j] = ans;
+    }
+  
+    int editDistance(string s, string t) {
+        // Code here
+        vector<vector<int>> dp(s.length(), vector<int> (t.length(), -1));
+        return solve(s, t, 0, 0, dp);
+    }
+};
+
+
+//bottom up
+    int solveMem(string s, string t){
+        vector<vector<int>> dp(s.length()+1, vector<int> (t.length()+1, 0));
+        
+        for(int j = 0; j<t.length(); j++){
+            dp[s.length()][j] = t.length() - j;
+        }
+        
+        for(int i = 0; i<s.length(); i++){
+            dp[i][t.length()] = s.length() - i;
+        }
+        
+        for(int i = s.length() - 1; i>=0; i--){
+            for(int j = t.length()-1; j>=0; j--){
+                int ans = 0;
+        
+                if(s[i]==t[j]){
+                    ans = dp[i+1][j+1];
+                } else{
+                    int insertAns = 1 + dp[i][j+1];
+                    int deleteAns = 1 + dp[i+1][j];
+                    int replaceAns = 1  + dp[i+1][j+1];
+                    
+                    ans = min(insertAns, min(deleteAns, replaceAns));
+                }   
+                
+                dp[i][j] = ans;
+            }
+        }
+        
+        return dp[0][0];
+    }
+  
+    int editDistance(string s, string t) {
+        // Code here
+        // vector<vector<int>> dp(s.length(), vector<int> (t.length(), -1));
+        return solveMem(s, t);
+    }
