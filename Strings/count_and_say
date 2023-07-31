@@ -1,0 +1,36 @@
+lass Solution {
+public:
+    string build(string s){
+        int freq = 1;
+        char curr = s[0];
+
+        string result = "";
+        for(int i = 1; i<s.size(); i++){
+            if(s[i] == curr )
+                freq++;
+
+            else{
+                char freqCH = (char)('0' + freq);
+                result.push_back(freqCH);
+                result.push_back(curr);
+                freq = 1;
+                curr = s[i];
+            }
+        }
+        
+        char freqCH = (char)('0' + freq);
+        result.push_back(freqCH);
+        result.push_back(curr);
+
+        return result;
+    }
+
+    string countAndSay(int n) {
+        string initial = "1";
+
+        for(int i = 1; i<n; i++){
+            initial = build(initial);
+        }
+        return initial;
+    }
+};
