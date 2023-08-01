@@ -1,0 +1,36 @@
+class Solution{
+  public:
+  long long int wineSelling(vector<int>& Arr, int N){
+      //Code here.
+    int b = 0, s = 0;
+      
+    long long int ans = 0;
+    while(b < N && s < N){
+        
+        while(Arr[b] <= 0){        //placing buy position
+            b++;
+            if(b==N)    return ans;
+        }
+        
+        while(Arr[s] >= 0){        //placing sell position
+            s++;
+            if(s==N)    return ans;
+        }
+        
+        if(abs(Arr[b])>= abs(Arr[s])){
+           ans +=abs(b-s) * abs(Arr[s]);
+           Arr[b] += Arr[s] ;
+           Arr[s] = 0;
+        }
+        else{
+           ans +=abs(b-s) * abs(Arr[b]);
+           Arr[s] += Arr[b] ;
+           Arr[b] = 0;
+        }
+        
+    }
+      
+    return ans;
+      
+  }
+};

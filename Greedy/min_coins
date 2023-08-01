@@ -1,0 +1,102 @@
+Follow the steps below to implement the idea: 
+
+-> Sort the array of coins in decreasing order.
+-> Initialize ans vector as empty.
+-> Find the largest denomination that is smaller than remaining amount and while it is smaller than the remaining amount:
+        Add found denomination to ans. Subtract value of found denomination from amount.
+-> If amount becomes 0, then print ans.
+
+// All denominations of Indian Currency
+int denomination[]
+    = { 1, 2, 5, 10, 20, 50, 100, 500, 1000 };
+int n = sizeof(denomination) / sizeof(denomination[0]);
+ 
+void findMin(int V)
+{
+    sort(denomination, denomination + n);
+ 
+    // Initialize result
+    vector<int> ans;
+ 
+    // Traverse through all denomination
+    for (int i = n - 1; i >= 0; i--) {
+ 
+        // Find denominations
+        while (V >= denomination[i]) {
+            V -= denomination[i];
+            ans.push_back(denomination[i]);
+        }
+    }
+ 
+    // Print result
+    for (int i = 0; i < ans.size(); i++)
+        cout << ans[i] << " ";
+}
+ 
+// Driver Code
+int main()
+{
+    int n = 93;
+    cout << "Following is minimal"
+         << " number of change for " << n << ": ";
+ 
+    // Function Call
+    findMin(n);
+    return 0;
+}
+
+
+
+//ladder if-else 
+vector<int> findMin(int n)
+{
+    // initialize vector to store the coins
+    vector<int> v;
+    // iterate till n>0 and check condition according to the
+    // greatest coin possible
+    while (n > 0) {
+        if (n >= 2000) {
+            v.push_back(2000);
+            n -= 2000;
+        }
+        else if (n >= 500) {
+            v.push_back(500);
+            n -= 500;
+        }
+        else if (n >= 200) {
+            v.push_back(200);
+            n -= 200;
+        }
+        else if (n >= 100) {
+            v.push_back(100);
+            n -= 100;
+        }
+        else if (n >= 50) {
+            v.push_back(50);
+            n -= 50;
+        }
+        else if (n >= 20) {
+            v.push_back(20);
+            n -= 20;
+        }
+        else if (n >= 10) {
+            v.push_back(10);
+            n -= 10;
+        }
+        else if (n >= 5) {
+            v.push_back(5);
+            n -= 5;
+        }
+        else if (n >= 2) {
+            v.push_back(2);
+            n -= 2;
+        }
+        else if (n >= 1) {
+            v.push_back(1);
+            n -= 1;
+        }
+    }
+    // return the ans that stores in the vector
+    return v;
+}
+ 

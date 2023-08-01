@@ -1,0 +1,27 @@
+vector<int> arrange(vector<int> &arr, int n){
+    int ones;
+    for(int i =0; i<n; i++){
+        if(arr[i] == 1) 
+            ones++;
+    }
+
+    sort(arr.begin(), arr.end());
+    reverse(arr.begin(), arr.end());
+
+    vector<int> ans;
+    for(int i =0; i<ones; i++){                     //handling onesssssssss
+        ans.push_back(1);
+    }
+
+    if(n-ones ==2 and arr[0]==3 and arr[1]==2){     //special case
+        ans.push_back(2);
+        ans.push_back(3);
+    }
+    else {
+        for(int i =0; i<n-ones; i++){               //general case
+        ans.push_back(arr[i]);
+    }
+    }
+
+    return ans;
+}
