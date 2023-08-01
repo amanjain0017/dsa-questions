@@ -1,0 +1,26 @@
+class Solution
+{
+public:
+    vector<int> candyStore(int candies[], int N, int K)
+    {
+        // Write Your Code here
+        sort(candies, candies + N);
+        int mini = 0, maxi = 0;
+        int temp  = N;
+        
+        for(int i = 0; i<N; i++){
+            mini += candies[i];
+            N = N-K;
+        }
+        
+        
+        
+        int index = 0;
+        for(int i = temp-1; i>=index; i--){
+            maxi += candies[i];
+            index += K;
+        }
+        
+        return {mini, maxi};
+    }
+};
