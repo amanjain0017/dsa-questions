@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "mergesort_inplace": "cpp",
-        "max_stocks_ith_day": "cpp"
+        "max_stocks_ith_day": "cpp",
+        "min_subsetsum_greater_than_other": "cpp"
     }
 }
