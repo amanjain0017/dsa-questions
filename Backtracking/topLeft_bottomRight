@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+
+bool isSafe(vector<vector<int> > & mat , int m , int n, int x, int y){
+    if(x>=0 && x<m && y>=0 && y<n){
+        return true;
+    }
+    return false;
+}
+
+void solve(vector<vector<int> > & mat , int m , int n, vector<int> path, 
+vector<vector <int> >&ans, int x, int y){
+    
+    path.push_back(mat[x][y]);
+    
+    if(x == m-1 && y == n-1){
+        ans.push_back(path);
+        return;
+    }
+
+    //down
+    if(isSafe(mat, m, n, x+1, y)){ 
+        solve(mat, m, n, path , ans, x+1, y);
+    }
+    //right
+    if(isSafe(mat, m, n, x, y+1)){
+        solve(mat, m, n, path, ans, x, y+1);
+    }
+
+    path.pop_back();    //backtrack
+}
+
+vector<vector <int> > printAllpaths(vector<vector<int> > & mat , int m , int n)
+{
+    //Write Your Code Here.
+    vector<vector <int> >ans;
+    vector<int> path;
+    solve(mat, m, n, path, ans, 0, 0);
+    return ans; 
+
+}

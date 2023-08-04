@@ -1,0 +1,51 @@
+class Solution {
+public:
+    bool isSafe(vector<vector<int>> &matrix, int m , int n, int x, int y) {
+        if(x>=0 && x<m && y>=0 && y<n && matrix[x][y] ==1 )
+            return true;
+        return false;
+    }
+
+    void solve(vector<vector<int>> &matrix, int x, int y, int xd, int yd, int &ans, int count, int m , int n){
+        //base case : reached destination
+        if(x==xd and y==yd){
+            ans = max(ans, count);
+            return;
+        }
+        
+        //edge case: src or dest is a hurdle
+        if(matrix[x][y]==0 or matrix[xd][yd]==0)
+            return ;
+            
+        matrix[x][y] = 0;
+        
+        //down
+        if(isSafe(matrix, m, n, x+1, y)){
+            solve(matrix, x+1, y, xd, yd, ans, count+1, m, n);
+        }
+        //left
+        if(isSafe(matrix, m, n, x, y-1)){
+            solve(matrix, x, y-1, xd, yd, ans, count+1, m, n);
+        }
+        //up
+        if(isSafe(matrix, m, n, x-1, y)){
+            solve(matrix, x-1, y, xd, yd, ans, count+1, m, n);
+        }
+        //right
+        if(isSafe(matrix, m, n, x, y+1)){
+            solve(matrix, x, y+1, xd, yd, ans, count+1, m, n);
+        }
+        
+        matrix[x][y] = 1;   //backtrack
+    }
+
+    int longestPath(vector<vector<int>> matrix, int xs, int ys, int xd, int yd)
+    {
+        // code here
+        int ans = -1;
+        int count = 0;
+        solve(matrix, xs, ys, xd, yd, ans, count, matrix.size(), matrix[0].size());
+        return ans;
+        
+    }
+};
