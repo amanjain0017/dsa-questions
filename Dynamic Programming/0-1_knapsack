@@ -8,12 +8,14 @@ class Solution
     
     int solveMem(int W, int wt[], int val[], int n){
         // base condition
-       if(n==0 || W==0)     
+        if(n==0 || W==0)     
             return 0;
-       
-       if(dp[n][W]!=-1)     
+        
+        //dp check
+        if(dp[n][W]!=-1)     
             return dp[n][W];
-       
+        
+        //choice diagram
         if( wt[n-1] <= W)
             return dp[n][W] = max(val[n-1] + solveMem(W-wt[n-1], wt, val, n-1), 0 + solveMem(W, wt, val, n-1));
             
@@ -28,6 +30,8 @@ class Solution
         solveMem(W, wt, val, n);
     }
 };
+
+
 
 //bottom up
  int knapSack(int W, int wt[], int val[], int n) 
