@@ -1,0 +1,46 @@
+class Solution{
+  public:
+    int minJumps(int arr[], int n){
+        // Your code here
+        int jumps = 1;
+        int maxR = arr[0];
+        int steps = arr[0];
+        
+        if(arr[0]==0)   return -1;
+        
+        for(int i = 1; i<n; i++){
+            if(i == n-1)
+                return jumps;
+            
+            maxR = max(maxR, arr[i]+i);
+            
+            steps--;
+            
+            if(steps==0){
+                jumps++;
+                steps = maxR - i;
+                
+                if(i>=maxR)     return -1;
+            }
+        }
+        
+        return -1;
+    }
+};int minJumps(std::vector<int>& nums) {
+    int n = nums.size();
+    std::vector<int> dp(n, std::numeric_limits<int>::max()); // dp[i] represents the minimum jumps required to reach index i
+    dp[0] = 0; // Minimum jumps required to reach the first index is 0
+
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (j + nums[j] >= i) {
+                dp[i] = std::min(dp[i], dp[j] + 1);
+            }
+        }
+    }
+
+    return dp[n - 1];
+}
+
+
+//dynamic programming

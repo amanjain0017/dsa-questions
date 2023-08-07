@@ -47,3 +47,23 @@ void maxSubArraySum(int a[], int size)
 
 
 
+//dynamic programming
+#include <vector>
+#include <algorithm>
+
+int maxSubarraySum(std::vector<int>& nums) {
+    int n = nums.size();
+    std::vector<int> dp(n); // dp[i] represents the maximum sum subarray ending at index i
+    dp[0] = nums[0];
+    int maxSum = dp[0];
+
+    for (int i = 1; i < n; i++) {
+        dp[i] = std::max(nums[i], nums[i] + dp[i - 1]);
+        maxSum = std::max(maxSum, dp[i]);
+    }
+
+    return maxSum;
+}
+
+
+
