@@ -1,0 +1,21 @@
+long long int count(long long int n)
+{
+	long long int score[n+1],i;
+	memset(score, 0, sizeof(score));
+	score[0]=1;                 // If 0 sum is required number of ways is 1.
+	
+	// Your code here
+	for(int i = 3; i<=n; i++){
+	    score[i] += score[i-3];
+	}
+	
+	for(int i = 5; i<=n; i++){
+	    score[i] += score[i-5];
+	}
+	
+	for(int i = 10; i<=n; i++){
+	    score[i] += score[i-10];
+	}
+	
+	return score[n];
+}

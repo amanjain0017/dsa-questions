@@ -1,0 +1,54 @@
+#include <bits/stdc++.h> 
+
+int solve(vector < int > & a, int n, int p, vector<vector<int>> &dp){
+    if(n==0)
+        return 0;
+    if(p==0)
+        return 1;
+
+    if(dp[n][p]!=-1)    return dp[n][p];
+
+    int include = 0;
+    if(a[n-1]<=p){
+        include = 1 + solve(a, n-1, p/a[n-1], dp);
+    }
+    int exclude = solve(a, n-1, p, dp);
+
+    return dp[n][p] = include + exclude;
+}
+
+
+
+int countSubsequences(vector < int > & a, int n, int p) {
+    // Write your code here.
+    vector<vector<int>> dp(n+1, vector<int>(p+1, -1));
+    return solve(a, n, p, dp);
+
+}
+
+
+
+//bottomupp
+int productSubSeqCount(vector<int> &arr, int k)
+{
+    int n = arr.size();
+    int dp[k + 1][n + 1];
+    memset(dp, 0, sizeof(dp));
+ 
+    for (int i = 1; i <= k; i++) {
+        for (int j = 1; j <= n; j++) {
+    
+            // number of subsequence using j-1 terms
+            dp[i][j] = dp[i][j - 1];
+   
+            // if arr[j-1] > i it will surely make product greater
+            // thus it won't contribute then
+            if (arr[j - 1] <= i)
+ 
+                // number of subsequence using 1 to j-1 terms
+                // and j-th term
+                dp[i][j] += dp[i/arr[j-1]][j-1] + 1;
+        }
+    }
+    return dp[k][n];
+}
