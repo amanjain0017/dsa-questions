@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    string longestPalin (string S) {
+        // code here
+        int n = S.size();
+        vector<vector<int>> dp(n, vector<int> (n, 0));
+        
+        string ans = "";
+        int maxi = 0;
+        
+        for(int diff = 0; diff<n; diff++){
+            for(int i = 0, j = i + diff; j<n;i++, j++){
+                
+                if(i==j){
+                    dp[i][j] = 1;
+                }
+                
+                else if(diff == 1 and S[i]==S[j]){
+                    dp[i][j] = 2;
+                }
+                else if( S[i]==S[j] and dp[i+1][j-1] ){
+                    dp[i][j] = dp[i+1][j-1] + 2;
+                }
+                
+                if(dp[i][j]){
+                    if(j-i+1 > maxi){
+                        maxi = j-i+1;
+                        ans = S.substr(i, j-i+1);
+                    }
+                }
+            }
+        }
+        
+        return ans;
+    }
+};

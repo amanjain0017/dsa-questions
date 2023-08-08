@@ -1,0 +1,109 @@
+class Solution
+{
+    public:
+    //Function to find the maximum number of cuts.
+    
+    int solve(int n, int x, int y, int z,  vector<int> &dp){
+        if(n==0)    return 0;
+        if(n<0)     return INT_MIN;
+        
+        if(dp[n]!=-1)    return dp[n];
+        
+        int xcut = 1 + solve(n-x, x, y, z, dp);
+        int ycut = 1 + solve(n-y, x, y, z, dp);
+        int zcut = 1 + solve(n-z, x, y, z, dp);
+        
+        return dp[n] = max({xcut, ycut, zcut});    
+    }
+    
+    int maximizeTheCuts(int n, int x, int y, int z)
+    {
+        //Your code here
+        vector<int> dp(n+1, -1);
+        int ans =  solve(n, x, y, z, dp);
+        
+        if(ans<0)   return 0;
+        
+        return ans;
+    }
+};
+
+
+//alternate
+int dp[10005];
+    
+int func(int l, int p, int q, int r)
+{
+    if(l==0)
+       return 0;                               // Base Case
+           
+     if(dp[l]!=-1)                              // If already memoized
+        return dp[l];
+        
+     int a(INT_MIN),b(INT_MIN),c(INT_MIN);         // Intitialise a,b,& c with INT_MIN
+  
+     if(p<=l)                                      // If Possible to make a cut of length p
+        a=func(l-p,p,q,r);
+  
+     if(q<=l)                                      // If possible to make a cut of length q
+        b=func(l-q,p,q,r);
+  
+     if(r<=l)                                      // If possible to make a cut of length r
+        c=func(l-r,p,q,r);
+  
+     return dp[l]=1+max({a,b,c});                    // Memoize & return
+        
+}
+    
+int maximizeTheCuts(int l, int p, int q, int r)
+{
+    memset(dp,-1,sizeof(dp));                 // Set Lookup table to -1
+    int ans=func(l,p,q,r);                    // Utility function call
+        
+    if(ans<0)
+       return 0;                        // If returned answer is negative , that means cuts are not possible
+    return ans;
+ }
+
+
+
+
+ //bottom up
+ int findMaximum(int l, int p, int q, int r)
+{
+
+    // Array to store the cut at each length
+    int dp[l + 1];
+
+    // All values with -1
+    memset(dp, -1, sizeof(dp));
+
+    // if length of rod is 0 then total cuts will be 0
+    // so, initialize the dp[0] with 0
+    dp[0] = 0;
+
+    for (int i = 0; i <= l; i++) {
+
+        // if certain length is not possible
+        if (dp[i] == -1)
+            continue;
+
+        // if a segment of p is possible
+        if (i + p <= l)
+            dp[i + p] = max(dp[i + p], dp[i] + 1);
+
+        // if a segment of q is possible
+        if (i + q <= l)
+            dp[i + q] = max(dp[i + q], dp[i] + 1);
+
+        // if a segment of r is possible
+        if (i + r <= l)
+            dp[i + r] = max(dp[i + r], dp[i] + 1);
+    }
+    // if no segment can be cut then return 0
+    if (dp[l] == -1) {
+        dp[l] = 0;
+    }
+    // return value corresponding to length l
+    return dp[l];
+}
