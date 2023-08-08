@@ -1,0 +1,20 @@
+int coinGameWinner(int n, int a, int b)
+{
+	// Write bour code here.
+	bool dp[n+1];
+	dp[0] = false;
+	dp[1] = true;
+
+	for(int i = 2; i<=n; i++){
+		if(i-a>=0 && dp[i-a]==0)
+			dp[i] = true;
+		else if(i-b>=0 && dp[i-b]==0)
+			dp[i] = true;
+		else if(i-1>=0 && dp[i-1]==0)
+			dp[i] = true;
+		else	
+			dp[i] = false;
+	}
+
+	return dp[n];
+}

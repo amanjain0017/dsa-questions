@@ -1,0 +1,123 @@
+class Solution
+{
+    public:
+    
+    int solve(int curr, int prev, int a[], int n,vector<vector<int>> &dp){
+        if(curr==n)
+            return 0;
+            
+        if(dp[curr][prev + 1]!=-1)  return dp[curr][prev+1];
+        
+        int include = 0;
+        if(prev==-1 || a[curr]>a[prev]){
+            include = 1 + solve(curr+1, curr, a , n , dp);
+        }
+        int exclude = 0 + solve(curr + 1, prev, a, n, dp);
+        
+        return dp[curr][prev+1] = max(include, exclude);
+        
+        
+    }
+    
+    //Function to find length of longest increasing subsequence.
+    int longestSubsequence(int n, int a[])
+    {
+       // your code here
+       vector<vector<int>> dp(n, vector<int>(n + 1, -1));
+       return solve(0, -1, a, n, dp);
+    }
+};
+
+
+//bottom up
+    int solveMem(int n, int a[]){
+        vector<vector<int>> dp(n+1, vector<int>(n + 1, 0));
+        
+        for(int curr = n-1; curr>=0; curr--){
+            for(int prev = curr-1; prev>=-1; prev--){
+                
+                int include = 0;
+                if(prev==-1 || a[curr]>a[prev]){
+                    include = 1 + dp[curr+1][curr+1];
+                }
+                int exclude = 0 + dp[curr+1][prev+1];
+                
+                dp[curr][prev+1] = max(include, exclude);
+                
+            }
+        }
+        
+        return dp[0][-1+1];
+    }
+    
+    //Function to find length of longest increasing subsequence.
+    int longestSubsequence(int n, int a[])
+    {
+       // your code here
+    //   vector<vector<int>> dp(n, vector<int>(n + 1, -1));
+       return solveMem(n, a);
+    }
+
+
+
+
+
+    //space optimize
+    int solveMem(int n, int a[]){
+        
+        vector<int>now(n + 1, 0);
+        vector<int>next(n + 1, 0);
+        
+        for(int curr = n-1; curr>=0; curr--){
+            for(int prev = curr-1; prev>=-1; prev--){
+                
+                int include = 0;
+                if(prev==-1 || a[curr]>a[prev]){
+                    include = 1 + next[curr+1];
+                }
+                int exclude = 0 + next[prev+1];
+                
+                now[prev+1] = max(include, exclude);
+                
+            }
+            next = now;
+        }
+        
+        return next[-1+1];
+    }
+    
+    //Function to find length of longest increasing subsequence.
+    int longestSubsequence(int n, int a[])
+    {
+       // your code here
+    //   vector<vector<int>> dp(n, vector<int>(n + 1, -1));
+       return solveMem(n, a);
+    }
+
+
+
+
+//best solution using binary search
+    int longestSubsequence(int n, int a[])
+    {
+       // your code here
+    //   vector<vector<int>> dp(n, vector<int>(n + 1, -1));
+       
+        vector<int> temp;
+        temp.push_back(a[0]);
+        
+        for(int i = 1; i<n; i++){
+            if(a[i]>temp.back()){
+                temp.push_back(a[i]);
+            }
+            
+            else{
+                int index = lower_bound(temp.begin(), temp.end(), a[i]) - temp.begin();
+                temp[index] = a[i];
+            }
+            
+        }
+        
+        return temp.size();
+        
+    }
