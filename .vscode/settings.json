@@ -4,6 +4,7 @@
         "max_stocks_ith_day": "cpp",
         "min_subsetsum_greater_than_other": "cpp",
         "count_subsequences_product_less_k": "cpp",
-        "word_break": "cpp"
+        "word_break": "cpp",
+        "min_cost_path_to_dest": "cpp"
     }
 }
