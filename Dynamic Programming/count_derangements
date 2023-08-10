@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+long long ans(int n,vector<long long>&dp){
+    if(n==1)
+    return 0;
+    if(n==2)
+    return 1;
+    if(dp[n]!=-1)
+    return dp[n];
+    else
+    return dp[n]=(n-1)*(ans(n-1,dp)+ans(n-2,dp))%1000000007;
+}
+long long tab(int n){
+    vector<long long>dp(n+1);
+    dp[1]=0,dp[2]=1;
+    for(int i=3;i<n+1;i++){
+        dp[i]=(i-1)*(dp[i-1]+dp[i-2])%1000000007;
+    }
+    return dp[n];
+}
+long long int countDerangements(int n) {
+    // Write your code here.
+    // vector<long long>dp(n+1,-1);
+    // return ans(n,dp);
+    return tab(n);
+}
