@@ -1,0 +1,80 @@
+//hashing
+Node * reverse(Node * head){
+    if(!head)
+        return NULL;
+        
+    Node * curr = head, *prev = NULL;
+    
+    while(curr){
+        Node * next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    
+    return prev;
+}
+
+Node* findIntersection(Node* head1, Node* head2)
+{
+    // Your Code Here
+    unordered_map<int, int> m;
+    
+    Node* temp = head1;
+    
+    while (temp) {
+        m[temp->data]++;
+        temp = temp->next;
+    }
+    
+    temp = head2;
+    Node* ans = NULL;
+    
+    while (temp) {
+        
+        if (m[temp->data] >=1 ) {
+            Node* newNode = new Node(temp->data);
+            newNode->next = ans;
+            ans = newNode;
+            m[temp->data]--;
+            // cout<<m[temp->data];
+        }
+        temp = temp->next;
+    }
+    
+    return reverse(ans);
+}
+
+
+
+//similar to LCS
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+ 
+struct Node* sortedIntersect(struct Node* a,
+                             struct Node* b)
+{
+     
+    // base case
+    if (a == NULL || b == NULL)
+        return NULL;
+ 
+    /* If both lists are non-empty */
+ 
+    /* Advance the smaller list and
+       call recursively */
+    if (a->data < b->data)
+        return sortedIntersect(a->next, b);
+ 
+    if (a->data > b->data)
+        return sortedIntersect(a, b->next);
+ 
+    // Below lines are executed only
+    // when a->data == b->data
+    struct Node* temp = (struct Node*)malloc(
+                  sizeof(struct Node));
+    temp->data = a->data;
+}

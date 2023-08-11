@@ -1,0 +1,27 @@
+int mod = 1e9 + 7;
+
+long long  multiplyTwoLists (Node* l1, Node* l2)
+{
+    Node * temp = l1;
+    long long a = 0;
+    
+    while(temp){
+        int digit = temp->data;
+        a = (a * 10 + digit)%mod;
+        temp = temp->next;
+    }
+    
+    temp = l2;
+    
+    long long b = 0;
+    
+    while(temp){
+        int digit = temp->data;
+        b = (b * 10 + digit)%mod;
+        temp = temp->next;
+    }
+    
+    long long prod = (a*b)%mod;
+    
+    return prod;
+}

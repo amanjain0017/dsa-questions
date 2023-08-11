@@ -51,7 +51,7 @@ struct Node* reverseDLL(struct Node * head)
     
     //Your code here
     if(head == NULL || head->next == NULL)
-    return head;
+        return head;
     
     struct Node *prev = NULL, *curr = head;
     
