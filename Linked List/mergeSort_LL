@@ -1,0 +1,71 @@
+class Solution{
+  public:
+  
+    Node * getMid(Node * head){
+
+        Node * slow = head, *fast = head->next;
+        
+        while(fast and fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        
+        return slow;
+    }
+    
+    Node * merge(Node* left, Node* right){
+        if(!left)   return right;
+        if(!right)   return left;
+        
+        Node * ans = new Node(-1);
+        Node* temp = ans;
+        
+        while(left and right){
+            if(left->data < right->data){
+                temp->next = left;
+                temp = left;
+                left = left->next;
+            }
+            else{
+                temp->next = right;
+                temp = right;
+                right = right->next;
+            }
+        }
+        
+        while(left){
+                temp->next = left;
+                temp = left;
+                left = left->next;
+        }
+        
+        while(right){
+                temp->next = right;
+                temp = right;
+                right = right->next;            
+        }
+        
+        ans = ans->next;
+        return ans;
+    }
+  
+    //Function to sort the given linked list using Merge Sort.
+    Node* mergeSort(Node* head) {
+        //base case
+        if(!head or !head->next)
+            return head;
+            
+        //get middle and sort left and right part    
+        Node * mid = getMid(head);
+    
+        Node * left = head, *right = mid->next;
+        mid->next = NULL;
+        
+        left = mergeSort(left);
+        right = mergeSort(right);
+        
+        //merge 2 sorted LL
+        Node * result = merge(left, right);
+        return result;
+    }
+};
