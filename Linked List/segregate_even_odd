@@ -1,0 +1,95 @@
+class Solution{
+public:
+    Node* divide(int N, Node *head){
+        // code here
+        Node * odd = NULL;
+        Node * even = NULL;
+        Node * oddlast = NULL;
+        Node * evenlast = NULL;
+        
+        while(head){
+            if(head->data%2==0){
+                if(!even){
+                    even = head;
+                    evenlast = head;
+                }else{
+                    evenlast->next = head;
+                    evenlast = head;
+                }
+            }else{
+                if(!odd){
+                    odd = head;
+                    oddlast = head;
+                }else{
+                    oddlast->next = head;
+                    oddlast = head;
+                }
+            }
+            head = head->next;
+        }
+        
+        if(evenlast)
+            evenlast->next = odd;
+        
+        if(oddlast)
+            oddlast->next = NULL;
+            
+        if(even)    return even;
+        
+        return odd;
+        
+        
+    }
+};
+
+
+
+//using queue
+Node* divide(Node* head)
+{
+  
+    queue<Node*> qe, qo,q;
+    Node* cur = head;
+    while (cur) {
+        if (cur->data % 2 == 0)
+            qe.push(cur);
+        else
+            qo.push(cur);
+        cur = cur->next;
+    }
+    Node* node = new Node(-100);
+    Node* ans = node;
+  
+    while (!qe.empty()) {
+        q.push(qe.front());
+        qe.pop();
+    }
+  
+    while (!qo.empty()) {
+        q.push(qo.front());
+        qo.pop();
+    }
+    while (!q.empty()) {
+        node->next = q.front();
+        node = q.front();
+        q.pop();
+    }
+  
+    node->next = NULL;
+    return ans->next;
+}
+  
+int main()
+{
+    Node* head;
+    head = new Node(9);
+    head->next = new Node(1);
+    head->next->next = new Node(6);
+    head->next->next->next = new Node(7);
+    head->next->next->next->next = new Node(3);
+    head->next->next->next->next->next = new Node(4);
+    Node* temp = divide(head);
+    p(temp);
+  
+    return 0;
+}
