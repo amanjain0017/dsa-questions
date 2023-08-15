@@ -27,16 +27,7 @@ treenode* mirrorTree(node* root)
     return newNode;
 }
  
-// Helper function to print Inorder traversal
-void inorder(node* root)
-{
-    if (root == NULL)
-        return;
-    inorder(root->left);
-    cout <<" "<< root->val;
-    inorder(root->right);
-}
- 
+
 // mirrorify function takes two trees,
 // original tree and a mirror tree
 // It recurses on both the trees,

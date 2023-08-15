@@ -1,0 +1,64 @@
+class Solution {
+  public:
+    // Function to find largest subtree sum.
+    int maxi = INT_MIN;
+    
+    int solve(Node* root){
+        if(!root)   return 0;
+        
+        int left = solve(root->left);
+        int right = solve(root->right);
+        
+        maxi = max(maxi, left + right + root->data);
+        
+        return left + right + root->data;
+    }
+    
+    int findLargestSubtreeSum(Node* root)
+    {
+        //Write your code here
+        solve(root);
+        
+        return maxi;
+    }
+};
+
+
+
+//alternative
+int ans = INT_MIN;
+int dfs(Node* root)
+{
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL and root->right == NULL)
+        return root->key;
+    // check for every subtree in left
+    int sumleft = dfs(root->left);
+    // check for every subtree in right
+    int sumright = dfs(root->right);
+    // sum of all the nodes in the subtree from root node
+    int sumrootnode = sumleft + sumright + root->key;
+    // temp max value of left and right subtree
+    int tempmax = max(sumleft, sumright);
+ 
+    tempmax = max(tempmax, sumrootnode);
+    // update the answer from temp, ans
+    ans = max(ans, tempmax);
+ 
+    return sumrootnode;
+}
+int findLargestSubtreeSum(Node* root)
+{
+ 
+    // check for the base conditions
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL && root->right == NULL)
+        return root->key;
+    // function call of dfs
+    int x = dfs(root);
+    // return the final answer
+    return ans;
+}
+ 
