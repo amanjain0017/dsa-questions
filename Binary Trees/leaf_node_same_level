@@ -1,0 +1,41 @@
+class Solution{
+  public:
+    /*You are required to complete this method*/
+    int ans = 1;
+    
+    void solve(Node* root, int height, int &ma){
+        if(!root)   return;
+        
+        if(!root->left and !root->right){
+            
+            if(ma==-1){
+                ma = height;
+            }
+            
+            else {
+                if(height!=ma){
+                ans = 0;
+                }
+                    
+            }
+            
+            return;
+        }
+        
+        solve(root->left, height+1, ma);
+        solve(root->right, height+1, ma);
+    }
+    
+    bool check(Node *root)
+    {
+        //Your code
+
+        int ma = -1;
+        int height = 0;
+        
+        solve(root, height, ma);
+        
+        return ans;
+        
+    }
+};

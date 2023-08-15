@@ -1,0 +1,103 @@
+class Solution{
+  public:
+    //Function to merge K sorted linked list.
+    Node* merge(Node* a, Node* b){
+        if (a == NULL)
+            return b;
+        else if (b == NULL)
+            return a;
+    
+        Node* result = NULL;
+    
+        if (a->data <= b->data) {
+    
+            result = a;
+            result->next = merge(a->next, b);
+    
+        } else {
+            result = b;
+            result->next = merge(a, b->next);
+        }
+    
+        return result;
+    }
+    
+    Node * mergeKLists(Node *arr[], int K)
+    {
+           // Your code here
+           int i = 0, last = K-1;
+           
+           while(last!=0){
+               i = 0;
+               int j = last;
+               
+               while(i<j){
+                   arr[i] = merge(arr[i], arr[j]);
+                   i++;
+                   j--;
+                   
+                   if(i>=j)
+                        last = j;
+               }
+           }
+           
+           return arr[0];
+    }
+};
+
+
+//using hashmaps
+// function to merge k sorted linked lists
+struct Node* mergeKSortedLists(
+    struct Node* arr[], int k)
+{
+    struct Node *head = NULL, *last;
+
+    // priority_queue 'pq' implemented
+    // as min heap with the
+    // help of 'compare' function
+    priority_queue<Node*, vector<Node*>, compare> pq;
+
+    // push the head nodes of all
+    // the k lists in 'pq'
+    for (int i = 0; i < k; i++)
+        if (arr[i] != NULL)
+            pq.push(arr[i]);
+
+    // loop till 'pq' is not empty
+    while (!pq.empty()) {
+
+        // get the top element of 'pq'
+        struct Node* top = pq.top();
+        pq.pop();
+
+        // check if there is a node
+        // next to the 'top' node
+        // in the list of which 'top'
+        // node is a member
+        if (top->next != NULL)
+            // push the next node in 'pq'
+            pq.push(top->next);
+
+        // if final merged list is empty
+        if (head == NULL) {
+            head = top;
+
+            // points to the last node so far of
+            // the final merged list
+            last = top;
+        }
+
+        else {
+            // insert 'top' at the end
+            // of the merged list so far
+            last->next = top;
+
+            // update the 'last' pointer
+            last = top;
+        }
+    }
+
+    // head node of the required merged list
+    return head;
+}

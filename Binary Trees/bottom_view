@@ -1,11 +1,7 @@
-class Solution
-{
-    public:
-    //Function to return a list of nodes visible from the top view 
-    //from left to right in Binary Tree.
-    vector<int> topView(Node *root)
-    {
-        //Your code here
+class Solution {
+  public:
+    vector <int> bottomView(Node *root) {
+        // Your Code Here
         vector<int> ans;
         
         if(root==NULL)  return ans;
@@ -23,8 +19,7 @@ class Solution
             Node* frontNode = temp.first;
             int hd = temp.second;
             
-            if(topNode.count(hd)==0)
-                topNode[hd] = frontNode->data;
+            topNode[hd] = frontNode->data;
                 
             if(frontNode->left)
                 q.push(make_pair(frontNode->left, hd-1));
@@ -38,5 +33,4 @@ class Solution
             
         return ans;
     }
-
 };

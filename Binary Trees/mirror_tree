@@ -1,0 +1,57 @@
+// Function to convert to  mirror tree
+treenode* mirrorTree(node* root)
+{
+    // Base Case
+    if (root == NULL)
+        return root;
+    node* t = root->left;
+    root->left = root->right;
+    root->right = t;
+ 
+    if (root->left)
+        mirrorTree(root->left);
+    if (root->right)
+        mirrorTree(root->right);
+   
+  return root;
+}
+ 
+
+
+ node* createNode(int val)
+{
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode->val = val;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+ 
+// Helper function to print Inorder traversal
+void inorder(node* root)
+{
+    if (root == NULL)
+        return;
+    inorder(root->left);
+    cout <<" "<< root->val;
+    inorder(root->right);
+}
+ 
+// mirrorify function takes two trees,
+// original tree and a mirror tree
+// It recurses on both the trees,
+// but when original tree recurses on left,
+// mirror tree recurses on right and
+// vice-versa
+void mirrorify(node* root, node** mirror)
+{
+    if (root == NULL) {
+        mirror = NULL;
+        return;
+    }
+ 
+    // Create new mirror node from original tree node
+    *mirror = createNode(root->val);
+    mirrorify(root->left, &((*mirror)->right));
+    mirrorify(root->right, &((*mirror)->left));
+}

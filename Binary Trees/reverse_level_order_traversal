@@ -1,0 +1,73 @@
+int height(Node* root){
+    if(!root)   return NULL;
+    
+    int left = height(root->left);
+    int right = height(root->right);
+    
+    return max(left, right) + 1;
+}
+
+void printLevel(Node* root, int level, vector<int> &ans){
+    if(!root)
+        return;
+        
+    if(level == 1)
+        ans.push_back(root->data);
+        
+    else if(level>1){
+        printLevel(root->left, level-1, ans);
+        printLevel(root->right, level-1, ans);
+    }
+}
+
+vector<int> reverseLevelOrder(Node *root)
+{
+    // code here
+    int h = height(root);
+    vector<int> ans;
+    
+    for(int i = h; i>=1;i--){
+        printLevel(root, i, ans);
+    }
+    
+    return ans;
+}
+
+
+
+//using stacks and queues 
+/* Given a binary tree, print its nodes in reverse level order */
+void reverseLevelOrder(node* root)
+{
+    stack <node *> S;
+    queue <node *> Q;
+    Q.push(root);
+ 
+    // Do something like normal level order traversal order. Following are the
+    // differences with normal level order traversal
+    // 1) Instead of printing a node, we push the node to stack
+    // 2) Right subtree is visited before left subtree
+    while (Q.empty() == false)
+    {
+        /* Dequeue node and make it root */
+        root = Q.front();
+        Q.pop();
+        S.push(root);
+ 
+        /* Enqueue right child */
+        if (root->right)
+            Q.push(root->right); // NOTE: RIGHT CHILD IS ENQUEUED BEFORE LEFT
+ 
+        /* Enqueue left child */
+        if (root->left)
+            Q.push(root->left);
+    }
+ 
+    // Now pop all items from stack one by one and print them
+    while (S.empty() == false)
+    {
+        root = S.top();
+        cout << root->data << " ";
+        S.pop();
+    }
+}

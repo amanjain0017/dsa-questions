@@ -1,0 +1,142 @@
+class Solution
+{
+    public:
+    
+    void insertAtTail(Node * &head, Node* &tail, int data){
+        
+        Node * newNode = new Node(data);
+        
+        if(!head){
+            head = newNode;
+            tail = newNode;
+        }
+        
+        tail->next = newNode;
+        tail = newNode;
+    }
+    
+    Node *copyList(Node *head)
+    {
+        
+        //step 1: create clone LL
+        Node* cloneHead = NULL;
+        Node* cloneTail = NULL;
+        
+        Node* temp = head;
+        
+        while(temp){
+            insertAtTail(cloneHead, cloneTail, temp->data);
+            temp = temp->next;
+        }
+        
+        //create mapping
+        unordered_map<Node*, Node*> m;
+        
+        Node* original = head;
+        Node* clone = cloneHead;
+        
+        while(original and clone){
+            m[original] = clone;
+            original = original->next;
+            clone = clone->next;
+        }
+        
+        //step 3 : random pointers
+        
+        original = head;
+        clone = cloneHead;
+        
+        while(original){
+            clone->arb = m[original->arb];
+            original = original->next;
+            clone = clone->next;
+            
+        }
+        
+        return cloneHead;
+    }
+
+};
+
+
+
+//using no extra space
+class Solution
+{
+    public:
+    
+    void insertAtTail(Node * &head, Node* &tail, int data){
+        
+        Node * newNode = new Node(data);
+        
+        if(!head){
+            head = newNode;
+            tail = newNode;
+        }
+        
+        tail->next = newNode;
+        tail = newNode;
+    }
+    
+    Node *copyList(Node *head)
+    {
+        
+        //step 1: create clone LL
+        Node* cloneHead = NULL;
+        Node* cloneTail = NULL;
+        
+        Node* temp = head;
+        
+        while(temp){
+            insertAtTail(cloneHead, cloneTail, temp->data);
+            temp = temp->next;
+        }
+        
+        //add cloneNOdes between  original NOdes
+        
+        
+        Node* original = head;
+        Node* clone = cloneHead;
+        
+        while(original and clone){
+            Node* next = original->next;
+            original->next = clone;
+            original = next;
+            
+            next = clone->next;
+            clone->next = original;
+            clone  = next;
+            
+        }
+        
+        //step 3 : random pointers
+        
+        temp = head;
+        
+        while(temp){
+            if(temp->next){
+                temp->next->arb = temp->arb ? temp->arb->next : temp->arb;
+            }
+         
+            temp = temp->next->next;   
+        }
+        
+        //step 4: revert changes
+        original = head;
+        clone = cloneHead;
+        
+        while(original and clone){
+            original->next = clone->next;
+            original = original->next;
+            
+            if(original)
+                clone->next = original->next;
+                
+            clone = clone->next;
+        }
+
+        
+        return cloneHead;
+    }
+
+};
