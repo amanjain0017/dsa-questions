@@ -1,0 +1,75 @@
+//preorder traversal using morris algo
+class Solution
+{
+    public: 
+    //Function to convert binary tree to doubly linked list and return it.
+    Node * bToDLL(Node *root)
+    {
+        // your code here
+        Node* curr = root;
+        Node* prev = NULL;
+        
+        if(!root)   return NULL;
+        
+        while(curr){
+            if(curr->left){
+                Node * pred = curr->left;
+                while(pred->right)
+                    pred = pred->right;
+                    
+                pred->right = curr->right;
+                curr->right = curr->left;
+            }
+            
+            curr->left = prev;
+            prev = curr;
+            curr = curr->right;
+        }
+        
+        return root;
+    }
+};
+
+
+
+
+//inorder traversal
+// This function should return head to the DLL
+class Solution
+{
+    public: 
+    
+    void solve(Node* root, Node* &head, Node* &prev, int &flag){
+        if(!root)   return;
+        
+        solve(root->left, head, prev, flag);
+        
+        if(flag==0){
+            head = root;
+            prev = root;
+            flag = 1;
+        }
+        else{
+            prev->right = root;
+            prev->right->left = prev;
+            prev = prev->right;
+        }
+        
+        
+        solve(root->right, head, prev, flag);
+    }
+    
+    //Function to convert binary tree to doubly linked list and return it.
+    Node * bToDLL(Node *root)
+    {
+        // your code here
+        Node* head = NULL;
+        Node* prev = NULL;
+        
+        int flag = 0;
+        
+        solve(root, head, prev, flag);
+        
+        return head;
+    }
+};

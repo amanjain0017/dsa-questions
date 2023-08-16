@@ -1,0 +1,50 @@
+class Solution{
+  public:
+  
+    void inorder(vector<int>&A, int n, vector<int> &v , int index){
+        if(index>=n)
+            return;
+            
+        inorder(A, n, v, 2 * index + 1);
+        
+        v.push_back(A[index]);
+        
+        inorder(A, n, v, 2 * index + 2);
+    }
+    
+    int findPosition(vector<int> &v, int x){
+        for(int i = 0; i<v.size(); i++){
+            if(v[i]==x){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+  
+    int minSwapsArray(vector<int>v, int n){
+        
+        vector<int> temp(v.begin(), v.end());
+        sort(temp.begin(), temp.end());
+        
+        int ans = 0;
+        
+        for(int i = 0; i<v.size(); i++){
+            if(v[i] != temp[i]){
+                ans++;
+                swap(v[i], v[findPosition(v, temp[i])]);
+            }
+        }
+        
+        return ans;
+    }
+  
+    int minSwaps(vector<int>&A, int n){
+        //Write your code here
+        vector<int> v;
+        inorder(A, n, v, 0);
+        return minSwapsArray(v , n);
+    }
+    
+    
+};
