@@ -1,0 +1,36 @@
+class Solution
+{
+public:
+    
+    bool search(Node* root2, int x){
+        if(!root2)              return false;
+        if(root2->data == x)    return true;
+        
+        bool left = false, right = false;
+        
+        if(root2->data > x)
+            left = search (root2->left, x);
+        if(root2->data < x)
+            right = search (root2->right, x);
+            
+        return left or right;
+    }
+
+    void solve(Node* root1, Node* root2, int x, int &count){
+        if(!root1)   return;
+        
+        solve(root1->left, root2, x, count);
+        
+        if(search(root2, x-root1->data))
+            count++;
+        
+        solve(root1->right, root2, x, count);
+    }
+
+    int countPairs(Node* root1, Node* root2, int x)
+    {
+        int count = 0;
+        solve(root1, root2, x, count);
+        return count;
+    }
+};

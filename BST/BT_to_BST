@@ -1,0 +1,40 @@
+class Solution{
+  public:
+    // The given root is the root of the Binary Tree
+    // Return the root of the generated BST
+    void inorder(Node* root, vector<int>&in){
+        if(!root)   return;
+        
+        inorder(root->left, in);
+        
+        in.push_back(root->data);
+        
+        inorder(root->right, in);
+    }
+    
+    void inorder_to_BST(Node* root, vector<int> &in, int &i){
+        if(!root)   return;
+        
+        inorder_to_BST(root->left, in, i);
+        
+        root->data = in[i];
+        i++;
+        
+        inorder_to_BST(root->right, in, i);
+    }
+    
+    Node *binaryTreeToBST (Node *root)
+    {
+        //Your code goes here
+        vector<int> in;
+        inorder(root, in);
+        
+        
+        sort(in.begin(), in.end());
+        
+        int i = 0;
+        inorder_to_BST(root, in, i);
+        
+        return root;
+    }
+};
