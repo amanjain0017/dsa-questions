@@ -1,0 +1,59 @@
+class Solution
+{
+    public:
+    
+    void inorder(Node* root, vector<int> & in, int& count){
+        if(!root)   return;
+        
+        inorder(root->left, in, count);
+        
+        in.push_back(root->data);
+        count++;
+        
+        inorder(root->right, in, count);
+        
+    }
+    
+    vector<int> merge(vector<int> in1, vector<int> in2, int count1, int count2){
+        vector<int> result(count1 + count2);
+        
+        int i = 0, j = 0, k= 0;
+        
+        while(i<count1 and j<count2){
+            if(in1[i] < in2[j]){
+                result[k++] = in1[i++];
+            }
+            else{
+                result[k++] = in2[j++];
+            }
+        }
+        
+        while(i<count1){
+            result[k++] = in1[i++];
+        }
+        while(j<count2){
+            result[k++] = in2[j++];
+        }
+        
+        return result;
+    }
+    
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    vector<int> merge(Node *root1, Node *root2)
+    {
+       //Your code here
+       vector<int> in1;
+       int count1 = 0;
+       inorder(root1, in1, count1);
+       
+       vector<int> in2;
+       int count2 = 0;
+       inorder(root2, in2, count2);
+       
+       vector<int> ans = merge(in1, in2, count1, count2);
+       
+       return ans;
+       
+    }
+};

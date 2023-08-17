@@ -1,0 +1,98 @@
+class Solution {
+public:
+    string reorganizeString(string s) {
+        string res="";
+        unordered_map<char,int> mp;
+        priority_queue<pair<int,char>>pq;
+        
+        for(auto ch: s)
+            mp[ch]+=1;
+        
+        for(auto m: mp)
+            pq.push(make_pair(m.second,m.first));
+        
+        while(pq.size()>1){
+            auto top1= pq.top();
+            pq.pop();
+            auto top2 = pq.top();
+            pq.pop();
+            
+            res+=top1.second;
+            res+=top2.second;
+            
+            top1.first -=1;
+            top2.first -= 1;
+            
+            if(top1.first > 0)
+                pq.push(top1);
+            
+            if(top2.first > 0)
+                pq.push(top2);
+        }
+        
+        if(!pq.empty()){
+            if(pq.top().first > 1)
+                return "";
+            
+            else
+                res+=pq.top().second;
+        }
+        
+        return res;
+    }
+};
+
+
+
+
+//best optimal: using only maps
+// OPTIMAL SOLUTION (using map only)
+/*
+TC : O(n)
+SC : O(1)
+*/
+class Solution {
+public:
+    string reorganizeString(string s) {
+        int n = s.length();
+
+        // create map to store characters and their frequencies
+        int map[26] = {0}; // SC: O(1)
+        for(int i = 0; i < n; i++) { // TC: O(n)
+            map[s[i]-'a']++;
+        }
+
+        int maxFreq = -1, maxFreqChar = '#';
+        // finding 'maxFreqChar' and 'maxFreq'
+        for(int i = 0; i < 26; i++) { // TC: O(1)
+            if(map[i] > maxFreq) {
+                maxFreq = map[i];
+                maxFreqChar = i + 'a';
+            }
+        }
+
+        // 
+        if(maxFreq > (n+1)/2)
+            return "";
+
+        int index = 0;
+        while(maxFreq > 0 && index < n) { // TC: O(n)
+            s[index] = maxFreqChar;
+            index += 2;
+            maxFreq--;
+        }
+
+        map[maxFreqChar - 'a'] = 0;
+
+        for(int i = 0; i < 26; i++) {
+            while(map[i] > 0) { // TC: O(n)
+                index = (index >= n) ? 1 : index;
+                s[index] = i + 'a';
+                index += 2;
+                map[i]--;
+            }
+        }
+
+        return s;
+    }
+};

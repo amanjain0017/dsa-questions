@@ -1,4 +1,4 @@
-//brite force: o(n^2 log n)
+//brite force: o(n^2 log n^2)
 #include <algorithm>
 int getKthLargest(vector<int> &arr, int k)
 {
