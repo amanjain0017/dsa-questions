@@ -6,6 +6,7 @@
         "count_subsequences_product_less_k": "cpp",
         "word_break": "cpp",
         "min_cost_path_to_dest": "cpp",
-        "mirror_tree": "cpp"
+        "mirror_tree": "cpp",
+        "vector": "cpp"
     }
 }

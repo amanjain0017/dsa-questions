@@ -1,0 +1,60 @@
+class Solution {
+public:
+    
+    int x[8] = {-1, -1, -1, 0, 1, 1, 1, 0};
+    int y[8] = {-1,  0,  1, 1, 1, 0,-1,-1};
+    
+    bool search(vector<vector<char>>& grid, int R, int C, int row, int col, string word){
+        
+            // If first character of word doesn't
+        // match with given starting point in grid.
+        if(grid[row][col]!=word[0])
+            return false;
+            
+        int length = word.size();
+        
+        for(int dir = 0; dir<8; dir++){
+            int rd = row + x[dir];
+            int cd = col + y[dir];
+            int i;
+            // First character is already checked,
+            // match remaining characters
+            for(i = 1; i<length; i++){
+                if(rd>=R || cd>=C || rd < 0 || cd<0 )   //out of bound
+                    break;
+                
+                if(grid[rd][cd]!=word[i])               //word not match
+                    break;
+                    
+                //move in direction
+                rd+=x[dir];
+                cd+=y[dir];
+            }
+            // If all character matched, then value of k must
+            // be equal to length of word
+            if(i==length)   return true;
+        }
+        
+        return false;
+    }
+
+	vector<vector<int>> searchWord(vector<vector<char>>grid, string word){
+	    // Code here
+	    int R = grid.size();
+	    int C = grid[0].size();
+	    
+	    vector<vector<int>> ans;
+	    
+	    // Consider every point as starting
+        // point and search given word
+	    for(int row = 0; row<R; row++){
+	        for(int col = 0; col<C; col++){
+	            if(search(grid, R, C, row, col, word)){
+	                ans.push_back({row, col});
+	            }
+	        }
+	    }
+	    
+	    return ans;
+	}
+};

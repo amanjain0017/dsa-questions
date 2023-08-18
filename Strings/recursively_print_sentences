@@ -1,0 +1,29 @@
+class Solution{
+    public:
+    
+    void print(vector<vector<string>>&list, int row, vector<vector<string>> &ans, vector<string> temp){
+        
+        if(row == list.size()){
+            ans.push_back(temp);
+            return;
+        }
+        
+        for(int i = 0; i<list[row].size(); i++){
+            temp.push_back(list[row][i]);
+            print(list, row + 1, ans, temp);
+            temp.pop_back();
+        }
+
+        
+    }
+    
+    vector<vector<string>> sentences(vector<vector<string>>&list){
+        //Write your code here
+        vector<vector<string>> ans;
+        vector<string> temp;
+        
+        print(list, 0, ans, temp);
+
+        return ans;
+    }
+};
