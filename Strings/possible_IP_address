@@ -1,0 +1,61 @@
+class Solution{
+  public:
+  
+    bool isValid(string s){
+        vector<string> ips;
+        string temp = "";
+        
+        for(int i = 0; i<s.size(); i++){
+            if(s[i]== '.'){
+                ips.push_back(temp);
+                temp = "";
+            }
+            else{
+                temp += s[i];
+            }
+        }
+        
+        ips.push_back(temp);
+        
+        for(int i = 0; i<ips.size(); i++){
+            
+            if(ips[i].size() >3 or stoi(ips[i]) < 0 or  stoi(ips[i]) > 255)    return false;
+            if(ips[i].size() > 1 and  stoi(ips[i])==0 )                       return false;
+            if(ips[i].size() > 1 and  stoi(ips[i])!=0 and ips[i][0]=='0')     return false;
+        }
+        
+        return true;
+    }
+  
+    vector<string> genIp(string &s) {
+        // Your code here
+        int len = s.size();
+        
+        vector<string> ans;
+        
+        if(len>12 or len <4)    return ans;
+        
+        string check = s;
+        
+        for(int i = 1; i<len-2; i++){
+            for(int j = i + 1; j<len-1; j++){
+                for(int k = j + 1; k<len; k++){
+                    
+                    check = check.substr(0, k) + "." + check.substr(k);
+                    check = check.substr(0, j) + "." + check.substr(j);
+                    check = check.substr(0, i) + "." + check.substr(i);
+                    
+                    if(isValid(check)){
+                        ans.push_back(check);
+                    }
+                    
+                    check = s;
+                }
+            }
+        }
+        
+        
+        return ans;
+    }
+
+};
