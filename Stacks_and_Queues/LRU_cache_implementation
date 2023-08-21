@@ -1,0 +1,55 @@
+class LRUCache
+{
+    private:
+    
+    unordered_map<int,list<pair<int,int>> :: iterator>m;
+    list<pair<int,int>> l;
+    int capacity;
+
+    public:
+
+    //Constructor for initializing the cache capacity with the given value.
+    LRUCache(int cap)
+    {
+        // code here
+        capacity = cap;
+    }
+    
+    //Function to return value corresponding to the key.
+    int GET(int key)
+    {
+        // your code here
+        if(m.find(key)==m.end()) return -1;
+        
+        auto it=m[key];
+        int val=it->second;
+        l.erase(it);
+        
+        l.push_front({key,val});
+        m[key]=l.begin();
+        return val;
+        
+    }
+    
+    //Function for storing key-value pair.
+    void SET(int key, int value)
+    {
+        // your code here  
+        
+        if(m.find(key)!=m.end()){
+                auto it=m[key];
+                int val=it->second;
+                l.erase(it);
+        }
+        
+        if(l.size()==capacity){
+            m.erase(l.back().first);
+            l.pop_back();
+             
+        }
+        
+        l.push_front({key,value});
+        m[key]=l.begin();
+        
+    }
+};
