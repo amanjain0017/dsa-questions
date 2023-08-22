@@ -1,0 +1,38 @@
+
+int doubleHelix(vector<int> &arr1, vector<int> &arr2){
+    int n = arr1.size();
+    int m = arr2.size();
+
+    int s1 = 0, s2 = 0;
+    int i = 0, j = 0;
+
+    int ans = 0;
+
+    while(i<n && j<m){
+        if(arr1[i] < arr2[j]){
+            s1 += arr1[i++];
+        }
+        else if(arr1[i] > arr2[j]){
+            s2 += arr2[j++];
+        }
+        else {
+            ans = ans + max(s1, s2) + arr1[i];
+            s1 = s2 = 0;
+            i++;
+            j++;
+        }
+    }
+
+    while(i<n){
+        s1 += arr1[i++];
+    }
+
+    while(j<m){
+        s2 += arr2[j++];
+    }
+
+     ans = ans + max(s1, s2);
+
+     return ans;
+
+}

@@ -1,0 +1,53 @@
+// Function to divide a by b and
+// return floor value of the result
+long long divide(long long dividend, long long int divisor)
+{
+ 
+    // Calculate sign of divisor i.e.,
+    // sign will be negative only if
+    // either one of them is negative
+    // otherwise it will be positive
+    long long sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+ 
+    // Update both divisor and
+    // dividend positive
+    dividend = abs(dividend);
+    divisor = abs(divisor);
+ 
+    // Initialize the quotient
+    long long quotient = 0;
+    while (dividend >= divisor) {
+        dividend -= divisor;
+        ++quotient;
+    }
+ 
+    // Return the value of quotient with the appropriate
+    // sign.
+    return quotient * sign;
+}
+ 
+
+
+
+int divide(int dividend, int divisor) {
+
+
+    bool sign = ((dividend >= 0 && divisor >= 0) || (dividend <= 0 && divisor <= 0)) ? true : false;
+
+    dividend = abs(dividend);
+    divisor = abs(divisor);
+    int result = 0;
+
+    while (dividend - divisor >= 0) {
+        int count = 0;
+
+        while (dividend - (divisor << 1 << count) >= 0) {
+            count++;
+        }
+
+        result += 1 << count;
+        dividend -= divisor << count;
+    }
+
+    return sign ? result : -result;
+}

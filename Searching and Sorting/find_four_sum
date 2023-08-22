@@ -1,0 +1,68 @@
+/* A naive solution to print all combination
+of 4 elements in A[]with sum equal to X */
+void findFourElements(int A[], int n, int X)
+{
+     
+// Fix the first element and find other three
+for (int i = 0; i < n - 3; i++)
+{
+    // Fix the second element and find other two
+    for (int j = i + 1; j < n - 2; j++)
+    {
+         
+        // Fix the third element and find the fourth
+        for (int k = j + 1; k < n - 1; k++)
+        {
+            // find the fourth
+            for (int l = k + 1; l < n; l++)
+            if (A[i] + A[j] + A[k] + A[l] == X)
+                cout << A[i] <<", " << A[j]
+                     << ", " << A[k] << ", " << A[l];
+        }
+    }
+}
+}
+
+
+class Solution{
+    public:
+    // arr[] : int input array of integers
+    // k : the quadruple sum required
+    vector<vector<int> > fourSum(vector<int> &arr, int k) {
+        // Your code goes here
+        sort(arr.begin(), arr.end());
+        int n = arr.size();
+        vector<vector<int>> ans;
+        
+        for (int i = 0; i < n - 3; i++) {
+            for (int j = i + 1; j < n - 2; j++) {
+                int target = k - arr[i] - arr[j];
+                int p = j + 1;
+                int q = n - 1;
+                
+                while (p < q) {
+                    int sum = arr[p] + arr[q];
+                    if (sum == target) {
+                        ans.push_back({arr[i], arr[j], arr[p], arr[q]});
+                        
+                        // Move pointers to avoid duplicate solutions
+                        while (p < q && arr[p] == ans.back()[2]) p++;
+                        while (p < q && arr[q] == ans.back()[3]) q--;
+                    } else if (sum < target) {
+                        p++;
+                    } else {
+                        q--;
+                    }
+                }
+                
+                // Move j pointer to avoid duplicate solutions
+                while (j < n - 2 && arr[j] == arr[j + 1]) j++;
+            }
+            
+            // Move i pointer to avoid duplicate solutions
+            while (i < n - 3 && arr[i] == arr[i + 1]) i++;
+        }
+        
+        return ans;
+    }
+};

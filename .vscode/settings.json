@@ -8,6 +8,7 @@
         "min_cost_path_to_dest": "cpp",
         "mirror_tree": "cpp",
         "vector": "cpp",
-        "median_2sortedarray_equalsize": "c"
+        "median_2sortedarray_equalsize": "c",
+        "double_helix_spoj": "cpp"
     }
 }
