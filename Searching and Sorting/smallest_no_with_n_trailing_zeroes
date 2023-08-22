@@ -1,0 +1,63 @@
+
+class Solution
+{
+    public:
+    
+        int findZeroes(int N)
+        {
+            // Write Your Code here
+            int count = 0;
+            
+            while(N/5 > 0){
+                count += (N/5);
+                N = N/5;
+            }
+            
+            return count;
+        }
+    
+    
+        int findNum(int n)
+        {
+        //complete the function here
+        int low = 0;
+        int high = 5*n;
+        
+        int ans = 0;
+        
+        while(low<=high){
+            int mid = (low + high)/2;
+            
+            int zeroes = findZeroes(mid);
+            
+            if(zeroes>=n){
+                ans = mid;
+                high = mid-1;
+            }
+            
+            else{
+                low = mid+1;
+            }
+        }
+        
+        return ans;
+    }
+};
+
+
+
+int findNum(int n) {
+    int num = 1;
+    int cnt = 0;
+    while (true) {
+        int temp = num;
+        while (temp % 5 == 0) {
+            cnt++;
+            temp /= 5;
+        }
+        if (cnt >= n) {
+            return num;
+        }
+        num++;
+    }
+}
