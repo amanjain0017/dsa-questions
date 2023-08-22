@@ -17,3 +17,37 @@ public:
     }
 };
 
+
+
+//binary search
+class Solution{   
+public:
+    int median(vector<vector<int>> &matrix, int R, int C){
+        // code here        
+        int mini = INT_MAX;
+        int maxi = INT_MIN;
+        
+        for(int i = 0; i<R; i++){
+            maxi = max( maxi, matrix[i][C-1]);
+            mini = min( mini, matrix[i][0] );
+        }
+        
+        int desired = (R*C + 1)/2;
+        
+        while(mini<maxi){
+            int mid = mini  + (maxi - mini)/2;
+            int count = 0;
+            
+            for(int i = 0 ; i<R; i++){
+                count += upper_bound(matrix[i].begin(), matrix[i].end(), mid) - matrix[i].begin();
+                
+            }
+            
+            if(count< desired)      mini = mid + 1;
+            else                    maxi =  mid;
+        }
+        
+        return mini;
+    }
+};
+

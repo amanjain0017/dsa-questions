@@ -7,6 +7,7 @@
         "word_break": "cpp",
         "min_cost_path_to_dest": "cpp",
         "mirror_tree": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "median_2sortedarray_equalsize": "c"
     }
 }
