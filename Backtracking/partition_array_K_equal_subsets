@@ -1,0 +1,40 @@
+class Solution{
+  public:
+  bool rec(int a[],int n,int k,int sum,int curr,vector<int> &vis){
+    if(k==1)
+        return 1;
+        
+    if(curr>sum)
+        return 0;
+        
+    if(curr==sum)
+        return rec(a,n,k-1,sum,0,vis);
+    
+    for(int i=0;i<n;i++){
+        if(!vis[i]){
+            vis[i]=1;
+            if(rec(a,n,k,sum,curr+a[i],vis))
+                return 1;
+            
+            vis[i]=0;
+        }
+    }
+    return 0;
+  }
+    bool isKPartitionPossible(int a[], int n, int k)
+    {
+         //Your code here
+        int sum=0;
+         
+        for(int i=0;i<n;i++)
+            sum+=a[i];
+            
+        if(k>n || sum%k!=0){
+            return 0;
+        }
+        
+        sum=sum/k;
+        vector<int> vis(n,0);
+        return rec(a,n,k,sum,0,vis);
+    }
+};

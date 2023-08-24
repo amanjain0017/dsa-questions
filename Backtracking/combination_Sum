@@ -1,0 +1,40 @@
+class Solution {
+  public:
+    //Function to return a list of indexes denoting the required 
+    //combinations whose sum is equal to given number.
+    vector<vector<int> > ans;
+    
+    void solve(vector<int> &A, int B, vector<int> v, int i){
+        
+        if(B==0){
+            ans.push_back(v);
+            return;
+        }
+        
+        while( i < A.size() and B - A[i]>=0){
+            
+            v.push_back(A[i]);
+            solve(A, B - A[i], v, i);
+            i++;
+            v.pop_back();
+        }
+        
+        return;
+    }
+    
+    vector<vector<int> > combinationSum(vector<int> &A, int B) {
+        // Your code here
+        sort(A.begin(), A.end());
+        
+        
+        //remmove duplicates
+        set<int> s(A.begin(), A.end());
+        A.assign(s.begin(), s.end());
+        
+        vector<int> v;
+        
+        solve(A, B, v, 0);
+        
+        return ans;
+    }
+};
