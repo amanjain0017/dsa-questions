@@ -1,0 +1,89 @@
+#include <bits/stdc++.h> 
+
+  pair<int, int> subSum(vector<int> temp){
+      int sum = 0;
+      int max_len = 0;
+      int ending_index = -1;
+      int starting_index = -1;
+      
+      unordered_map<int, int> m;
+      
+      for(int i = 0; i<temp.size(); i++){
+          sum += temp[i];
+          
+          if(sum == 0){
+              
+              if(i + 1 > max_len){
+                  max_len = i + 1;
+                  starting_index = 0;
+                  ending_index = i;
+              }
+          }
+          
+          if(m.find(sum) != m.end()){
+              if(i - m[sum] > max_len){
+                    max_len = i - m[sum];
+                    ending_index = i;
+                    starting_index = m[sum] + 1;
+              }
+
+          }
+          
+          else{
+              m[sum] = i;
+          }
+      }
+      
+      return make_pair(starting_index, ending_index);
+  }
+
+int maximumArea(vector<vector<int>>& mat, int n, int m)
+{
+    // Write your code here.   
+    //   int start_row = -1;
+    //   int start_col = -1;
+    //   int end_row = -1;
+    //   int end_col = -1;
+      
+      vector<vector<int>>grid = mat;
+
+      for(int i = 0; i<n; i++){
+          for(int j = 0; j<m; j++){
+              if(mat[i][j] == 0)
+                 grid[i][j] = -1;
+          }
+      }
+
+
+      int max_area = 0;
+      
+      for(int i = 0; i<n; i++){
+            vector<int> temp(m);
+            
+            for(int j = i; j<n; j++){
+                for(int k = 0; k<m; k++){
+                    temp[k] += grid[j][k];
+                }
+                
+                
+                pair<int, int> p = subSum(temp);
+                
+                if(p.first == -1)   continue;
+                
+                int length = p.second - p.first + 1;
+                int area = length * (j - i + 1);
+                
+                if(area > max_area ){
+                    
+                    max_area = area;
+                    // start_row = i;
+                    // end_row = j;
+                    // start_col = p.first;
+                    // end_col = p.second;
+                }
+            }
+      }
+      
+
+    return max_area;
+}
