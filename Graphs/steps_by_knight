@@ -1,0 +1,57 @@
+class Solution 
+{
+    public:
+    
+    bool isSafe(int x, int y, int n, vector<vector<int>> &visited){
+        if(x>=1 and y>=1 and x<=n and y<=n and visited[x][y] == 0)
+            return true;
+            
+        return false;
+    }
+    
+    //Function to find out minimum steps Knight needs to reach target position.
+	int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int N)
+	{
+	    // Code here
+	    int dx[] = {-2, -2, -1,-1, 1, 1, 2, 2};
+	    int dy[] = {-1,  1, -2, 2,-2, 2,-1, 1};
+	    
+	    int x1 = KnightPos[0];
+	    int y1 = KnightPos[1];
+	    int x2 = TargetPos[0];
+	    int y2 = TargetPos[1];
+	    
+	    vector<vector<int>> visited(N + 1, vector<int> (N + 1, 0));
+	    
+        queue<pair<pair<int, int>, int>> q;
+        q.push({{x1, y1}, 0});
+        
+        visited[x1][y1] = true;
+        
+        while(!q.empty()){
+            auto front = q.front();
+            q.pop();
+            
+            if(front.first.first == x2 and front.first.second == y2){
+                return front.second;
+            }
+            
+            for(int i = 0; i<8; i++){
+                int new_x = front.first.first + dx[i];
+                int new_y = front.first.second + dy[i];
+                
+                if(isSafe(new_x, new_y, N, visited)){
+                    visited[new_x][new_y] = 1;
+                    q.push({{new_x, new_y}, front.second + 1});
+                    
+                }
+                
+            }
+            
+        }
+	    
+	    
+	    return -1;
+	    
+	}
+};
