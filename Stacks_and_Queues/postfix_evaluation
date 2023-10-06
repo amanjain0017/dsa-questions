@@ -32,6 +32,8 @@ class Solution
                 }
             }
         
-        }return s.top();
+        }
+        
+        return s.top();
     }
 };

@@ -11,7 +11,7 @@ vector<long long> printFirstNegativeInteger(long long int A[],
             if (A[i] < 0)
                 q.push(i);
         }
-        
+        //storing ans
         if(q.size()>0)
             ans.push_back(A[q.front()]);
         
