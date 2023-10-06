@@ -1,5 +1,4 @@
-BinaryTreeNode<int>* solve(vector<int> &preorder, int mini, int maxi,
- int &index){
+BinaryTreeNode<int>* solve(vector<int> &preorder, int mini, int maxi,  int &index){
     
     if(index>=preorder.size())  
         return NULL;

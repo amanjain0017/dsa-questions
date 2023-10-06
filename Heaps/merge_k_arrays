@@ -21,7 +21,7 @@ class compare{
 vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
 {
     // Write your code here. 
-    priority_queue<node*, vector<node*> , compare> pq;
+    priority_queue <node*, vector<node*> , compare> pq;
 
     //create minHeap from starting of every array
     int n = kArrays.size();

@@ -13,8 +13,7 @@ void printNSE(int arr[], int n)
                 break;
             }
         }
-        cout << arr[i] << " -- "
-             << next << endl;
+        cout << arr[i] << " -- "<< next << endl;
     }
 }
 

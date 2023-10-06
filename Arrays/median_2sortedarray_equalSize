@@ -17,14 +17,13 @@ double getMedian(int ar1[], int ar2[], int n)
                   i/p array ar1[] */
     int j = 0; /* Current index of
                   i/p array ar2[] */
-    int count;
     int m1 = -1, m2 = -1;
  
     /* Since there are 2n elements,
     median will be average of elements
     at index n-1 and n in the array
     obtained after merging ar1 and ar2 */
-    for (count = 0; count <= n; count++) {
+    for (int count = 0; count <= n; count++) {
         /* Below is to handle case where
            all elements of ar1[] are
            smaller than smallest(or first)
@@ -65,6 +64,28 @@ double getMedian(int ar1[], int ar2[], int n)
 
 
 //binary search
+
+// Method 3 (Using binary search)
+
+// This method can also be used for arrays of different sizes.
+
+// Algorithm:
+
+// We can find the kth element by using binary search on whole range of constraints of elements.
+
+// Initialize ans = 0.0
+// Initialize low = -10^9, high = 10^9 and pos = n
+// Run a loop while(low <= high):
+// Calculate mid = (low + (high – low)>>1)
+// Find total elements less or equal to mid in the given arrays
+// If the count is less or equal to pos
+// Update low = mid + 1
+// Else high = mid – 1
+// Store low in ans, i.e., ans = low.
+// Again follow step3 with pos as n – 1
+// Return (sum + low * 1.0)/2
+
+
 double getMedian(int arr1[], int arr2[], int n)
 {
     // according to given constraints all numbers are in
