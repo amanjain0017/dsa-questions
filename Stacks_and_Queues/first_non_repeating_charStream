@@ -1,3 +1,4 @@
+//using count array
 class Solution {
 	public:
 		string FirstNonRepeating(string A){
@@ -31,6 +32,72 @@ class Solution {
 		    
 		}
 };
+
+//hashmap and vector
+string FirstNonRepeating(string A)
+{
+    vector<char> v;
+    unordered_map<char, int> mp;
+    string ans;
+ 
+    for (char ch : A) {
+        if (mp.find(ch)
+            == mp.end()) { // any new character visited for
+                           // the first time
+            v.push_back(ch);
+            mp[ch] = 1;
+        }
+        else {
+            // any repeated character visited
+            int index
+                = find(v.begin(), v.end(), ch) - v.begin();
+            // for any repeated character encountered more
+            // than twice the index will be equal to
+            // v.size()
+            if (index < v.size())
+                v.erase(v.begin() + index);
+        }
+        ans += (v.empty() ? '#' : v.front());
+    }
+ 
+    return ans;
+}
+
+
+//hashmap and queue
+string FirstNonRepeating(string A)
+{
+ 
+    // ans string stores the final answer
+    string ans = "";
+    // map to find uniqueness of an element
+    unordered_map<char, int> mp;
+    queue<char> q;
+    // queue to keep non-repeating element at the front.
+    for (int i = 0; i < A.length(); i++) {
+        // if non-repeating element found push it in
+        // queue and count in map
+        if (mp.find(A[i]) == mp.end()) {
+            q.push(A[i]);
+        }
+        mp[A[i]]++;
+        // if anytime front element is repeating pop it
+        // form queue
+        while (!q.empty() && mp[q.front()] > 1) {
+            q.pop();
+        }
+        // if queue is not empty append front element
+        // else append "#" in ans string.
+        if (!q.empty()) {
+            ans += q.front();
+        }
+        else {
+            ans += '#';
+        }
+    }
+    // return ans
+    return ans;
+}
 
 
 

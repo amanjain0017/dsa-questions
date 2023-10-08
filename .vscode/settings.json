@@ -10,6 +10,7 @@
         "vector": "cpp",
         "median_2sortedarray_equalsize": "c",
         "double_helix_spoj": "cpp",
-        "shortest_path_landimes": "cpp"
+        "shortest_path_landimes": "cpp",
+        "string": "cpp"
     }
 }
