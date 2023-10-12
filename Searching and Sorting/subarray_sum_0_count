@@ -23,3 +23,25 @@ public:
     }
 };
 
+
+//printing array with 0 sum
+void printSubarraysWithZeroSum(vector<int> arr) {
+    unordered_map<int, vector<int>> sumMap;
+    int n = arr.size();
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+        if (sum == 0) {
+            cout << "Subarray from index 0 to " << i << endl;
+        }
+        if (sumMap.find(sum) != sumMap.end()) {
+            vector<int> prevIndices = sumMap[sum];
+            for (int j : prevIndices) {
+                cout << "Subarray from index " << (j + 1) << " to " << i << endl;
+            }
+        }
+        sumMap[sum].push_back(i);
+    }
+}
+

@@ -14,20 +14,24 @@ void solve(long long int arr[],long long int n,long long int power)
 }
 int main()
 {
+	//number of soldiers
 	long long int n;
     cin>>n;
 
+	//entring soldier powers
 	long long int arr[n];
 	for(int i=0;i<n;i++)
 	{
 		cin>>arr[i];
 	}
 
+	//no of rounds
 	long long int q; 
     cin>>q;
 
 	for(int i=0;i<q;i++)
 	{
+		//bishus power for the round
 		int power;
         cin>>power;
         

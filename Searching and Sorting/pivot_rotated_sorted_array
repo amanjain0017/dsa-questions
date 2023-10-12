@@ -1,3 +1,4 @@
+//pivot index is used to find the number of times array is rotated
 class Solution {
 public:
     int findMin(vector<int>& nums) {

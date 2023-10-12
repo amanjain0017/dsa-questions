@@ -1,8 +1,8 @@
 int findMissing(int arr[], int n)
 {   
-    int a,d,l,s,i,sum=0,missingnumber;
-    a=arr[0];
-    l=arr[n-1];
+    int d,s,i,sum=0,missingnumber;
+    int a=arr[0];
+    int l=arr[n-1];
   
   
     /* Taking the sum of all the elements of the array
